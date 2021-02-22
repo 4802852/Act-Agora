@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h1>{{ lecture.name }}</h1>
+
+<p><strong>Trainer: </strong><a href="{% url 'trainer-detail' lecture.trainer.pk %}">{{ lecture.trainer }}</a></p>
+<p><strong>Genre: </strong>{% for genre in lecture.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<p><strong>Place: </strong>{% for gym in lecture.gym.all %}{{ gym }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+</p>
+<p><strong>Comment: </strong>{{ lecture.summary }}</p>
+
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Classes</h4>
+
+    {% for class in lecture.lectureinstance_set.all %}
+    <hr>
+    <p class="{% if class.status == 'a' %}text-success{% elif class.status == 'm' %}text-danger{% else %}text-warning{% endif %}">{{ class.get_status_display }}</p>
+    <p><strong>Day&Time: </strong>{{ class.get_weekday_display }}, {{ class.get_time_display }}</p>
+    {% endfor %}
+</div>
+{% endblock %}

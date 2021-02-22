@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<div class="row">
+    <div class="col-2 col-sm-2">
+        <p><a href="">회원정보 수정</a></p>
+        <p><a href="{% url 'accounts:password_change' %}">비밀번호 변경</a></p>
+        <p><a href="{% url 'trainer-new' %}">트레이너 정보 등록</a></p>
+        <p><a href="">트레이너 정보 수정</a></p>
+        <p><a href="">회원 탈퇴</a></p>
+    </div>
+    <div class="col-10 col-sm-10">
+        {% block contents2 %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

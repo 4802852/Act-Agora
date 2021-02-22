@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h1>{{ trainer.name }}</h1>
+
+<p><strong>Date of Birth: </strong>{{ trainer.date_of_birth }}</p>
+<p><strong>Genre: </strong>{% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<p><strong>Comment: </strong>{{ trainer.summary }}</p>
+
+<p><a href="{% url 'trainer-update' trainer.id %}">modify</a></p>
+<p><a href="{% url 'trainer-delete' trainer.id %}">delete</a></p>
+<p><a href="">new class</a></p>
+
+<div style="margin-left:20px;margin-top:20px">
+    <h4>Classes</h4>
+
+    {% for lecture in trainer.lecture_set.all %}
+    <hr>
+    <p><strong>Name: </strong><a href="{{ lecture.get_absolute_url }}">{{ lecture.name }}</a></p>
+    <p><strong>Place: </strong>{{ lecture.gym }}</p>
+    <p><strong>Genre: </strong>{{ lecture.display_genre }}</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<title>Welcome to Act:Agora</title>
+{% endblock %}
+
+{% block contents %}
+<div align="center">
+<h1>Welcome to PTin!</h1>
+<p>Welcome to PTin, a website for matching the trainees to the trainers</p>
+<h2>Dynamic content</h2>
+<p>{{ num_trainers }} trainers have {{ num_instances }} classes in PTin.</p>
+<p>But there are only {{ num_instances_available }} classes left.</p>
+</div>
+{% endblock %}

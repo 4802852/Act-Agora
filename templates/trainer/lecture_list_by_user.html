@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block contents %}
+<h1>Your Classes</h1>
+
+{% if lectureinstance_list %}
+    <ul>
+
+    {% for lectureinst in lectureinstance_list %}
+        <li>
+            <a href="{% url 'lecture-detail' lectureinst.lecture.pk %}">{{ lectureinst.lecture }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+    <p>There are no classes you are taking.</p>
+{% endif %}
+{% endblock %}

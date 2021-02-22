@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h1>Trainer List</h1>
+{% if trainer_list %}
+
+{% for trainer in trainer_list %}
+<a href="{{ trainer.get_absolute_url }}">
+    <div class="row" style="border: 1px solid black">
+        <div class="col-xs-3 col-sm-2" align="center" style="background-color:yellow; height:100px">사진</div>
+        <div class="col-xs-9 col-sm-10">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6" align="left">이름 : {{ trainer.name }}</div>
+                <div class="col-xs-6 col-sm-6" align="left">분야 : {% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+                <div class="col-xs-12 col-sm-12" align="left">특징 : {% for hashtag in trainer.hashtag.all %}#{{ hashtag }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+                <div class="col-xs-12 col-sm-12" align="left">설명 : {{ trainer.summary }}</div>
+            </div>
+        </div>
+    </div>
+</a>
+{% endfor %}
+
+{% else %}
+<p>There are no trainers in PTin.</p>
+{% endif %}
+{% endblock %}
