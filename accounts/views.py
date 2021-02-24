@@ -146,7 +146,7 @@ def profile_view(request):
 @login_message_required
 def profile_update_view(request):
     if request.method == 'POST':
-        user_change_form = TrainerChangeForm(request.POST, instance = request.user)
+        user_change_form = TrainerChangeForm(request.POST, instance=request.user)
 
         if user_change_form.is_valid():
             user_change_form.save()
@@ -154,7 +154,7 @@ def profile_update_view(request):
             return render(request, 'user/profile.html')
 
     else:
-        user_change_form = TrainerChangeForm(instance = request.user)
+        user_change_form = TrainerChangeForm(instance=request.user)
 
         return render(request, 'accounts/profile_update.html', {'user_change_form': user_change_form})
 
@@ -162,7 +162,7 @@ def profile_update_view(request):
 @login_message_required
 def profile_update_view(request):
     if request.method == 'POST':
-        user_change_form = TraineeChangeForm(request.POST, instance = request.user)
+        user_change_form = TraineeChangeForm(request.POST, instance=request.user)
 
         if user_change_form.is_valid():
             user_change_form.save()
@@ -170,6 +170,23 @@ def profile_update_view(request):
             return render(request, 'accounts/profile.html')
 
     else:
-        user_change_form = TraineeChangeForm(instance = request.user)
+        user_change_form = TraineeChangeForm(instance=request.user)
 
         return render(request, 'accounts/profile_update.html', {'user_change_form': user_change_form})
+
+
+@login_message_required
+def profile_delete_view(request):
+    if request.method == 'POST':
+        password_form = CheckPasswordForm(request.user, request.POST)
+
+        if password_form.is_valid():
+            request.user.delete()
+            logout(request)
+            messages.success(request, "회원탈퇴가 완료되었습니다.")
+            return redirect('/accounts/login/')
+
+    else:
+        password_form = CheckPasswordForm(request.user)
+
+    return render(request, 'accounts/profile_delete.html', {'password_form': password_form})

@@ -15,4 +15,5 @@ urlpatterns = [
     path('accounts/mypage/password_change/', views.password_edit_view, name='password_change'),
     path('accounts/profile/', views.profile_view, name='profile'),
     path('accounts/profile/update/', views.profile_update_view, name='profile_update'),
+    path('accounts/delete/', views.profile_delete_view, name='profile_delete'),
 ]
