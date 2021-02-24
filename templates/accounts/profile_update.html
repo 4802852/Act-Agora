@@ -1,0 +1,35 @@
+{% extends 'accounts/mypage_nav.html' %}
+
+{% block contents2 %}
+<form method="POST">
+    {% csrf_token %}
+    <table>
+        <tr>
+            <td>아이디</td>
+            {% if user.level == '0'%}
+            <td>{{ user.user_id }}&nbsp;&nbsp;(개발자)</td>
+            {% elif user.level == '1' %}
+            <td>{{ user.user_id }}&nbsp;&nbsp;(관리자)</td>
+            {% else %}
+            <td>{{ user.user_id }}</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>이메일</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <td>이름</td>
+            <td>{{ user_change_form.name }}</td>
+        </tr>
+        <tr>
+            <td>연락처</td>
+            <td>{{ user_change_form.hp }}</td>
+        </tr>
+    </table>
+    <div>
+        <a onclick="location.href='/accounts/profile/'" class="btn btn-primary" id="back_btn">돌아가기</a>
+        <button type="submit" class="btn btn-primary" id="detail_btn">수정하기</button>
+    </div>
+</form>
+{% endblock %}
