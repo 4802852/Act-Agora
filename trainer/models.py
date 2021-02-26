@@ -5,6 +5,8 @@ from django.urls import reverse
 import uuid
 from accounts.models import User
 
+from PTin.PTin import settings
+
 
 class Genre(models.Model):
     """Model representing a book genre."""
@@ -12,15 +14,6 @@ class Genre(models.Model):
 
     def __str__(self):
         """String for representing the Model object."""
-        return self.name
-
-
-class Gym(models.Model):
-    """Model representing a Gym."""
-    name = models.CharField(max_length=100, help_text='Enter a place for a class(e.g. Gym name)')
-
-    def __str__(self):
-        """String for representing the Model object"""
         return self.name
 
 
@@ -35,12 +28,14 @@ class Hashtag(models.Model):
 
 class Trainer(models.Model):
     """Model representing a trainer (not a specific class)"""
-    name = models.CharField(max_length=10)
-    date_of_birth = models.DateField(null=True, blank=True)
-    genre = models.ManyToManyField(Genre, blank=True, help_text='Select a genre for this trainer')
-    summary = models.TextField(max_length=1000, help_text='Enter a brief description of the trainer.')
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='작성자')
+    name = models.CharField(max_length=10, verbose_name='이름')
+    genre = models.ManyToManyField(Genre, blank=True, verbose_name='장르')
+    address = models.CharField(max_length=20, verbose_name='지역')
+    place = models.CharField(max_length=20, verbose_name='장소')
+    summary = models.TextField(max_length=1000)
     tagtext = models.CharField(max_length=200, blank=True)
-    hashtag = models.ManyToManyField(Hashtag, blank=True, help_text='Select a feature for this trainer.')
+    hashtag = models.ManyToManyField(Hashtag, blank=True)
 
     def hashtag_save(self):
         self.hashtag.set([])
@@ -67,6 +62,10 @@ class Trainer(models.Model):
 
     display_genre.short_description = 'Genre'
 
+    class Meta:
+        db_table = '트레이너'
+        verbose_name = '트레이너'
+        verbose_name_plural = '트레이너'
 
 class Lecture(models.Model):
     """Model representing the lecture(but not a specific class)."""

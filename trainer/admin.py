@@ -3,7 +3,6 @@ from trainer.models import Genre, Gym, Hashtag, Trainer, Lecture, LectureInstanc
 
 
 admin.site.register(Genre)
-admin.site.register(Gym)
 admin.site.register(Hashtag)
 
 
@@ -13,8 +12,9 @@ class LectureInline(admin.TabularInline):
 
 @admin.register(Trainer)
 class TrainerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'display_genre')
-    fields = ['name', 'date_of_birth', 'hashtag', 'summary', 'genre']
+    list_display = ('writer', 'name', 'display_genre')
+    fields = ['writer', 'name', 'genre', 'address', 'place', 'hashtag', 'summary']
+    search_fields = ('writer__user_id', 'name')
     inlines = [LectureInline]
 
 

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from .models import Genre, Hashtag, Gym, Trainer, Lecture, LectureInstance
@@ -24,6 +25,31 @@ def index(request):
 class TrainerListView(generic.ListView):
     model = Trainer
     paginate_by = 10
+    template_name = 'trainer/trainer_list.html'
+    context_object_name = 'trainer_list'
+
+    def get_queryset(self):
+        trainer_list = Trainer.objects.order_by('-id')
+        return trainer_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 5
+        max_index = len(paginator.page_range)
+
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+
+        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+        context['page_range'] = page_range
+
+        return context
 
 
 class TrainerDetailView(generic.DetailView):
@@ -33,6 +59,31 @@ class TrainerDetailView(generic.DetailView):
 class LectureListView(generic.ListView):
     model = Lecture
     paginate_by = 10
+    template_name = 'trainer/lecture_list.html'
+    context_object_name = 'lecture_list'
+
+    def get_queryset(self):
+        lecture_list = Lecture.objects.order_by('-id')
+        return lecture_list
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context['paginator']
+        page_numbers_range = 5
+        max_index = len(paginator.page_range)
+
+        page = self.request.GET.get('page')
+        current_page = int(page) if page else 1
+
+        start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+        end_index = start_index + page_numbers_range
+        if end_index >= max_index:
+            end_index = max_index
+
+        page_range = paginator.page_range[start_index:end_index]
+        context['page_range'] = page_range
+
+        return context
 
 
 class LectureDetailView(generic.DetailView):
@@ -100,9 +151,16 @@ def trainer_search(request):
     search_result = Trainer.objects.all()
     b = request.GET.get('b', '')
     if b:
-        search_result = search_result.filter(Q(name__icontains=b) | Q(summary__icontains=b))
-
-    return render(request, 'trainer/trainer_search.html', {'b': b, 'trainers': search_result})
+        search_result = search_result.filter(Q(writer__icontains=b) |
+                                             Q(name__icontains=b) |
+                                             Q(genre__icontains=b) |
+                                             Q(address__icontains=b) |
+                                             Q(place__icontains=b) |
+                                             Q(tagtext__icontains=b) |
+                                             Q(summary__icontains=b))
+    else:
+        messages.error(self.request, '검색어를 입력해주세요.')
+    return render(request, 'trainer/trainer_search.html', {'b': b, 'trainer_list': search_result})
 
 
 # def trainer_list(request):

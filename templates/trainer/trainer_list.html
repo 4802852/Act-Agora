@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
 
 {% block contents %}
+{% if b
+
 <h1>Trainer List</h1>
 {% if trainer_list %}
 
 {% for trainer in trainer_list %}
 <a href="{{ trainer.get_absolute_url }}">
     <div class="row" style="border: 1px solid black">
-        <div class="col-xs-3 col-sm-2" align="center" style="background-color:yellow; height:100px">사진</div>
-        <div class="col-xs-9 col-sm-10">
+        <div class="col-3 col-md-2" align="center" style="background-color:yellow; height:100px">사진</div>
+        <div class="col-9 col-md-10">
             <div class="row">
-                <div class="col-xs-6 col-sm-6" align="left">이름 : {{ trainer.name }}</div>
-                <div class="col-xs-6 col-sm-6" align="left">분야 : {% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-                <div class="col-xs-12 col-sm-12" align="left">특징 : {% for hashtag in trainer.hashtag.all %}#{{ hashtag }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-                <div class="col-xs-12 col-sm-12" align="left">설명 : {{ trainer.summary }}</div>
+                <div class="col-12 col-md-6" align="left">이름 : {{ trainer.name }}</div>
+                <div class="col-12 col-md-6" align="left">분야 : {% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
+                <div class="col-12 col-md-6" align="left">지역 : {{ trainer.address }}</div>
+                <div class="col-12 col-md-6" align="left">장소 : {{ trainer.place }}</div>
+                <div class="col-12 col-md-12" align="left">설명 : {{ trainer.summary }}</div>
+                <div class="col-12 col-md-12" align="left">특징 : {% for hashtag in trainer.hashtag.all %}#{{ hashtag }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
             </div>
         </div>
     </div>
@@ -22,5 +26,37 @@
 
 {% else %}
 <p>There are no trainers in PTin.</p>
+{% endif %}
+
+{% if is_paginated %}
+<ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+            tabindex="-1">이전</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">이전</a>
+    </li>
+    {% endif %}
+
+    {% for page in page_range %}
+    <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+        <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+    </li>
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a class="page-link"
+            href="?page={{ page_obj.next_page_number }}">다음</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" href="#">다음</a>
+    </li>
+    {% endif %}
+</ul>
 {% endif %}
 {% endblock %}
