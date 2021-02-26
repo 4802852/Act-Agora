@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.hashers import check_password
 
 from .models import User
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm, SetPasswordForm
 
 
 def hp_validator(value):
@@ -48,6 +48,7 @@ class TrainerRegisterForm(UserCreationForm):
     def save(self, commit=True):
         user = super(TrainerRegisterForm, self).save(commit=False)
         user.level = '2'
+        user.is_active = False
         user.save()
         return user
 
@@ -90,6 +91,7 @@ class TraineeRegisterForm(UserCreationForm):
     def save(self, commit=True):
         user = super(TraineeRegisterForm, self).save(commit=False)
         user.level = '3'
+        user.is_active = False
         user.save()
         return user
 
@@ -211,3 +213,42 @@ class CheckPasswordForm(forms.Form):
             if not check_password(password, confirm_password):
                 self.add_error('password', '비밀번호가 일치하지 않습니다.')
 
+
+class RecoveryPwForm(forms.Form):
+    user_id = forms.CharField(widget=forms.TextInput, )
+    name = forms.CharField(widget=forms.TextInput, )
+    email = forms.EmailField(widget=forms.EmailInput, )
+
+    class Meta:
+        fields = ['user_id', 'name', 'email']
+
+    def __init__(self, *args, **kwargs):
+        super(RecoveryPwForm, self).__init__(*args, **kwargs)
+        self.fields['user_id'].label = '아이디'
+        self.fields['user_id'].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'pw_form_id'
+        })
+        self.fields['name'].label = '이름'
+        self.fields['name'].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'pw_form_name',
+        })
+        self.fields['email'].label = '이메일'
+        self.fields['email'].widget.attrs.update({
+            'class': 'form-control',
+            'id': 'pw_form_email',
+        })
+
+
+class CustomSetPasswordForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super(CustomSetPasswordForm, self).__init__(*args, **kwargs)
+        self.fields['new_password1'].label = '새 비밀번호'
+        self.fields['new_password1'].widget.attrs.update({
+            'class': 'form-control',
+        })
+        self.fields['new_password2'].label = '새 비밀번호 확인'
+        self.fields['new_password2'].widget.attrs.update({
+            'class': 'form-control',
+        })

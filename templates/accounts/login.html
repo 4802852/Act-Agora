@@ -43,10 +43,11 @@
     </div>
     <label>
         <input type="checkbox" name="remember_session"/>
-        <span>로그인 상태 유</span>
+        <span>로그인 상태 유지</span>
     </label>
     <input type="submit" value="로그인">
 </form>
 <p><a href="{% url 'accounts:recovery_id' %}">find id</a></p>
+<p><a href="{% url 'accounts:recovery_pw' %}">find pw</a></p>
 
 {% endblock %}
