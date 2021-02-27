@@ -5,7 +5,7 @@ from django.urls import reverse
 import uuid
 from accounts.models import User
 
-from PTin.PTin import settings
+from PTin import settings
 
 
 class Genre(models.Model):
@@ -28,12 +28,13 @@ class Hashtag(models.Model):
 
 class Trainer(models.Model):
     """Model representing a trainer (not a specific class)"""
-    writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='작성자')
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, verbose_name='작성자')
     name = models.CharField(max_length=10, verbose_name='이름')
+    genretext = models.CharField(max_length=200, blank=True)
     genre = models.ManyToManyField(Genre, blank=True, verbose_name='장르')
-    address = models.CharField(max_length=20, verbose_name='지역')
-    place = models.CharField(max_length=20, verbose_name='장소')
-    summary = models.TextField(max_length=1000)
+    address = models.CharField(max_length=20, blank=True, verbose_name='지역')
+    place = models.CharField(max_length=20, blank=True, verbose_name='장소')
+    summary = models.TextField(max_length=1000, blank=True)
     tagtext = models.CharField(max_length=200, blank=True)
     hashtag = models.ManyToManyField(Hashtag, blank=True)
 
@@ -47,6 +48,17 @@ class Trainer(models.Model):
         for tag in hashtags:
             tag, tag_created = Hashtag.objects.get_or_create(name=tag)
             self.hashtag.add(tag)
+
+    def genre_save(self):
+        self.genre.set([])
+        genres = re.findall(r'(\w+)\b', self.genretext)
+
+        if not genres:
+            return
+
+        for tag in genres:
+            tag, tag_created = Genre.objects.get_or_create(name=tag)
+            self.genre.add(tag)
 
     def __str__(self):
         """String for representing the Model object."""
@@ -67,13 +79,13 @@ class Trainer(models.Model):
         verbose_name = '트레이너'
         verbose_name_plural = '트레이너'
 
+
 class Lecture(models.Model):
     """Model representing the lecture(but not a specific class)."""
-    name = models.CharField(max_length=20, help_text='Enter a name of this class.')
-    trainer = models.ForeignKey('Trainer', on_delete=models.SET_NULL, null=True)
-    gym = models.ManyToManyField(Gym, help_text='Select a place for this class')
-    genre = models.ManyToManyField(Genre, help_text='Select a genre for this class')
-    summary = models.TextField(max_length=1000, help_text='Enter a brief description of the class')
+    trainer = models.ForeignKey('Trainer', on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=20, verbose_name='강의명')
+    genre = models.ManyToManyField(Genre, verbose_name='장르', blank=True)
+    summary = models.TextField(max_length=1000, verbose_name='강의 설명')
 
     def __str__(self):
         """String for representing the Model object."""
@@ -88,6 +100,11 @@ class Lecture(models.Model):
         return ', '.join(genre.name for genre in self.genre.all()[:3])
 
     display_genre.short_description = 'Genre'
+
+    class Meta:
+        db_table = '강의'
+        verbose_name = '강의'
+        verbose_name_plural = '강의'
 
 
 class LectureInstance(models.Model):
@@ -159,33 +176,3 @@ class LectureInstance(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{ self.lecture }, { self.weekday }, { self.time }'
-
-
-class TrainerInformation(models.Model):
-    """Model representing a trainer (not a specific class)"""
-    name = models.CharField(max_length=10)
-    genre = models.ManyToManyField(Genre, help_text='Select a genre for this trainer')
-    summary = models.TextField(max_length=1000, help_text='Enter a brief description of the trainer.')
-    registered_date = models.DateTimeField(auto_now_add=True, verbose_name="등록 시간")
-    trainer = models.ForeignKey(User, verbose_name="Trainer", on_delete=models.CASCADE)
-
-    stat1 = models.IntegerField(help_text='First Stat (0~99)')
-    stat2 = models.IntegerField(help_text='Second Stat (0~99)')
-    stat3 = models.IntegerField(help_text='Third Stat (0~99)')
-    stat4 = models.IntegerField(help_text='Fourth Stat (0~99)')
-    stat5 = models.IntegerField(help_text='Fifth Stat (0~99)')
-    stat6 = models.IntegerField(help_text='Sixth Stat (0~99)')
-
-    def __str__(self):
-        """String for representing the Model object."""
-        return self.name
-
-    def get_absolute_url(self):
-        """Returns the url to access a detail information for this trainer."""
-        return reverse('trainer-detail', args=[str(self.id)])
-
-    def display_genre(self):
-        """Create a string for the Genre. This is required to display genre in Admin."""
-        return ', '.join(genre.name for genre in self.genre.all()[:3])
-
-    display_genre.short_description = 'Genre'

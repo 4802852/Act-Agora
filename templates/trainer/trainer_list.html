@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block contents %}
-{% if b
-
+{% if b %}
+<h1>Search List</h1>
+{% else %}
 <h1>Trainer List</h1>
-{% if trainer_list %}
+{% endif %}
 
+{% if trainer_list %}
 {% for trainer in trainer_list %}
 <a href="{{ trainer.get_absolute_url }}">
     <div class="row" style="border: 1px solid black">
@@ -16,7 +18,6 @@
                 <div class="col-12 col-md-6" align="left">분야 : {% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
                 <div class="col-12 col-md-6" align="left">지역 : {{ trainer.address }}</div>
                 <div class="col-12 col-md-6" align="left">장소 : {{ trainer.place }}</div>
-                <div class="col-12 col-md-12" align="left">설명 : {{ trainer.summary }}</div>
                 <div class="col-12 col-md-12" align="left">특징 : {% for hashtag in trainer.hashtag.all %}#{{ hashtag }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
             </div>
         </div>
@@ -25,7 +26,11 @@
 {% endfor %}
 
 {% else %}
-<p>There are no trainers in PTin.</p>
+    {% if b %}
+    <p>검색 결과가 없습니다.</p>
+    {% else %}
+    <p>현재 등록된 트레이너가 없습니다.</p>
+    {% endif %}
 {% endif %}
 
 {% if is_paginated %}

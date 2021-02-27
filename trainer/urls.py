@@ -20,7 +20,6 @@ urlpatterns += [
 # Register, modify, delete trainer
 urlpatterns += [
     path('trainer/new/', views.trainer_new, name='trainer-new'),
-    path('trainer/new-post/', views.trainer_new_post, name='trainer-new-post'),
     path('trainer/<int:trainer_id>/update/', views.trainer_update, name='trainer-update'),
     path('trainer/<int:trainer_id>/delete/', views.trainer_delete, name='trainer-delete')
 ]

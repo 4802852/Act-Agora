@@ -1,5 +1,5 @@
 from django.contrib import admin
-from trainer.models import Genre, Gym, Hashtag, Trainer, Lecture, LectureInstance
+from trainer.models import Genre, Hashtag, Trainer, Lecture, LectureInstance
 
 
 admin.site.register(Genre)

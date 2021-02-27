@@ -2,17 +2,20 @@
 
 {% block contents %}
 <h1>{{ trainer.name }}</h1>
-
-<p><strong>Date of Birth: </strong>{{ trainer.date_of_birth }}</p>
-<p><strong>Genre: </strong>{% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-<p><strong>Comment: </strong>{{ trainer.summary }}</p>
+<p><strong>작성:</strong>{{ trainer.writer }}</p>
+<p><strong>분야: </strong>{% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<p><strong>지역:</strong>{{ trainer.address }}</p>
+<p><strong>장소:</strong>{{ trainer.place }}</p>
+<p><strong>특징:</strong>{% for tag in trainer.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<p><strong>소개: </strong></p>
+<p>{{ trainer.summary | safe }}</p>
 
 <p><a href="{% url 'trainer-update' trainer.id %}">modify</a></p>
 <p><a href="{% url 'trainer-delete' trainer.id %}">delete</a></p>
 <p><a href="">new class</a></p>
 
 <div style="margin-left:20px;margin-top:20px">
-    <h4>Classes</h4>
+    <h4>강</h4>
 
     {% for lecture in trainer.lecture_set.all %}
     <hr>

@@ -1,9 +1,14 @@
 from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render, redirect
-from .models import Genre, Hashtag, Gym, Trainer, Lecture, LectureInstance
+
+from .forms import TrainerNewForm
+from .models import Genre, Hashtag, Trainer, Lecture, LectureInstance
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+from accounts.decorators import login_message_required
+from accounts.models import User
 
 
 def index(request):
@@ -109,21 +114,22 @@ class LecturesByTrainerListView(LoginRequiredMixin, generic.ListView):
         return Lecture.objects.filter(trainer=self.request.user)
 
 
+@login_message_required
 def trainer_new(request):
-    return render(request, 'board/trainer_new.html')
-
-
-def trainer_new_post(request):
     if request.method == "POST":
-        trainer = Trainer()
-        trainer.name = request.POST['trainer_name']
-        trainer.tagtext = request.POST['tagtext']
-        trainer.summary = request.POST['summary']
-        trainer.save()
-        trainer.hashtag_save()
-        return redirect('/trainer/' + str(trainer.id))
+        form = TrainerNewForm(request.POST)
+        user = request.session['user_id']
+        user_id = User.objects.get(user_id = user)
+
+        if form.is_valid():
+            trainer = form.save(commit = False)
+            trainer.writer = user_id
+            trainer.save()
+            trainer.hashtag_save()
+            return redirect('/trainer/' + str(trainer.id))
     else:
-        return render(request, 'board/trainer_new.html')
+        form = TrainerNewForm()
+    return render(request, 'trainer/trainer_new.html', {'form': form})
 
 
 def trainer_update(request, trainer_id):
@@ -151,19 +157,15 @@ def trainer_search(request):
     search_result = Trainer.objects.all()
     b = request.GET.get('b', '')
     if b:
-        search_result = search_result.filter(Q(writer__icontains=b) |
-                                             Q(name__icontains=b) |
-                                             Q(genre__icontains=b) |
-                                             Q(address__icontains=b) |
-                                             Q(place__icontains=b) |
-                                             Q(tagtext__icontains=b) |
-                                             Q(summary__icontains=b))
+        search_result = search_result.filter(
+            Q(writer__name__icontains=b)
+            | Q(name__icontains=b)
+            | Q(genre__name__icontains=b)
+            | Q(address__icontains=b)
+            | Q(place__icontains=b)
+            | Q(tag__name__icontains=b)
+            | Q(summary__icontains=b)
+            )
     else:
-        messages.error(self.request, '검색어를 입력해주세요.')
+        messages.error(request, '검색어를 입력해주세요.')
     return render(request, 'trainer/trainer_search.html', {'b': b, 'trainer_list': search_result})
-
-
-# def trainer_list(request):
-#     trainer_list = Trainer.objects.prefetch_related('hashtag').all()
-#
-#     return render(request, 'trainer/trainer_list.html', {'trainer_list': trainer_list, })

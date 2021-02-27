@@ -1,12 +1,17 @@
 {% extends "base.html" %}
 
+{% block header %}
+{% endblock %}
+
 {% block contents %}
 <div class="row">
     <div class="col-2 col-sm-2">
         <p><a href="{% url 'accounts:profile' %}">회원정보</a></p>
         <p><a href="{% url 'accounts:password_change' %}">비밀번호 변경</a></p>
+        {% if request.user.level == '0' or request.user.level == '1' or request.user.level == '2' %}
         <p><a href="{% url 'trainer-new' %}">트레이너 정보 등록</a></p>
         <p><a href="">트레이너 정보 수정</a></p>
+        {% endif %}
         <p><a href="{% url 'accounts:profile_delete' %}">회원 탈퇴</a></p>
     </div>
     <div class="col-10 col-sm-10">
