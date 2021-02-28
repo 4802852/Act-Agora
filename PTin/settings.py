@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'trainer',
     'accounts.apps.AccountConfig',
+    'imagekit',
 ]
 
 MIDDLEWARE = [

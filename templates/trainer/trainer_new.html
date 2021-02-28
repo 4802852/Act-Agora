@@ -11,10 +11,14 @@
 <form method="POST" action="" enctype="multipart/form-data" >
     {% csrf_token %}
     <p><strong>이름: </strong>{{ form.name }}</p>
+    <p><strong>사진: </strong>{{ form.image }}</p>
+    <input type="checkbox" id="imageChangeCheck" name="imageChange" style="display: none;">
     <p><strong>분야: </strong>{{ form.genretext }}</p>
     <p><strong>지역: </strong>{{ form.address }}</p>
     <p><strong>장소: </strong>{{ form.place }}</p>
     <p><strong>Hashtag: </strong>{{ form.tagtext }}</p>
+<!--    <p><strong>사진: </strong>{{ form.upload_files }}</p>-->
+    <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">
     <p><strong>summary:</strong></p>
     <textarea id="summernote" name="summary">{% if update %}{{ form.summary.value | safe }}{% endif %}</textarea>
     {% if update %}
@@ -55,4 +59,36 @@ $(document).ready(function() {
         $("submit").submit();
     });
 </script>
+{% if imagename %}
+<script type = "text/javascript">
+    $('[href="{{ image_url }}"]').html("{{ imagename }}");
+    $('#image-clear_id').css({opacity:'100', position:'relative', 'pointer-events':'auto'})
+
+    $("#id_image").change(function() {
+        if ($('#id_image').get(0).files.length == 1) {
+            $(".col-sm-12").contents().get(0).nodeValue = '[첨부파일 변경 시 기존 파일은 삭제됩니다.]'
+            $('#image-clear_id').attr("checked", false)
+            $('#image-clear_id').prev().hide()
+            $('#image-clear_id').next().hide()
+            $('#image-clear_id').hide()
+        }
+    });
+
+    $('#image-clear_id').on('click', function(){
+        if($(this).prop('checked')){
+            $('#id_image').hide()
+            document.getElementById('id_image').previousSibling.nodeValue = '[업로드 된 첨부파일을 삭제합니다.]'
+        } else{
+            $('#id_image').show()
+            document.getElementById('id_image').previousSibling.nodeValue = '변경: '
+        }
+    });
+
+    $('#write').click( function() {
+        if($('#id_image').get(0).files.length == 1){
+            $('#imageChangeCheck').attr("checked",true)
+        }
+    });
+</script>
+{% endif %}
 {% endblock %}

@@ -34,4 +34,4 @@ class TrainerNewForm(forms.ModelForm):
 
     class Meta:
         model = Trainer
-        fields = ['writer', 'name', 'genretext', 'address', 'place', 'tagtext', 'summary']
+        fields = ['writer', 'name', 'genretext', 'address', 'place', 'tagtext', 'image', 'summary']

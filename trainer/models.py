@@ -1,11 +1,16 @@
+import os
 import re
 
 from django.db import models
 from django.urls import reverse
 import uuid
+from datetime import datetime
 from accounts.models import User
 
 from PTin import settings
+
+from imagekit.models import ProcessedImageField
+from imagekit.processors import ResizeToFill
 
 
 class Genre(models.Model):
@@ -26,17 +31,36 @@ class Hashtag(models.Model):
         return self.name
 
 
+def get_file_path(instance, filename):
+    ymd_path = datetime.now().strftime('%Y/%m/%d')
+    uuid_name = uuid.uuid4().hex
+    return '/'.join(['upload_file/', ymd_path, uuid_name])
+
+
+def get_profile_image_path(instance, filename):
+    ymd_path = datetime.now().strftime('%Y/%m/%d')
+    uuid_name = uuid.uuid4().hex
+    return '/'.join(['profile/', ymd_path, uuid_name])
+
+
 class Trainer(models.Model):
     """Model representing a trainer (not a specific class)"""
     writer = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE, verbose_name='작성자')
     name = models.CharField(max_length=10, verbose_name='이름')
     genretext = models.CharField(max_length=200, null=True)
-    genre = models.ManyToManyField(Genre, null=True, blank=True, verbose_name='장르')
+    genre = models.ManyToManyField(Genre, blank=True, verbose_name='장르')
     address = models.CharField(max_length=40, null=True, verbose_name='지역')
     place = models.CharField(max_length=40, null=True, verbose_name='장소')
     summary = models.TextField(null=True, blank=True)
     tagtext = models.CharField(max_length=200, null=True, blank=True)
-    hashtag = models.ManyToManyField(Hashtag, null=True, blank=True)
+    hashtag = models.ManyToManyField(Hashtag, blank=True)
+    # upload_files = models.FileField(upload_to=get_file_path, null=True, blank=True, verbose_name='파일')
+    # filename = models.CharField(max_length=64, null=True, verbose_name='첨부파일명')
+    image = ProcessedImageField(
+        upload_to=get_profile_image_path, processors=[ResizeToFill(500, 500, upscale=False)], null=True, blank=True,
+        format='JPEG', options={'quality': 90}, verbose_name="프로필 이미지"
+    )
+    imagename = models.CharField(max_length=64, null=True, verbose_name='이미지파일')
 
     def hashtag_save(self):
         self.hashtag.set([])
@@ -78,6 +102,11 @@ class Trainer(models.Model):
         db_table = '트레이너'
         verbose_name = '트레이너'
         verbose_name_plural = '트레이너'
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
+        super(Trainer, self).delete(*args, **kwargs)
 
 
 class Lecture(models.Model):
@@ -176,3 +205,5 @@ class LectureInstance(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{ self.lecture }, { self.weekday }, { self.time }'
+
+

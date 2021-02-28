@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse, Http404
 
 from .forms import TrainerNewForm
 from .models import Genre, Hashtag, Trainer, Lecture, LectureInstance
@@ -9,6 +10,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.decorators import login_message_required
 from accounts.models import User
+
+import urllib
+import os
+import mimetypes
+
+from PTin import settings
 
 
 def index(request):
@@ -129,13 +136,18 @@ class LecturesByTrainerListView(LoginRequiredMixin, generic.ListView):
 @login_message_required
 def trainer_new(request):
     if request.method == "POST":
-        form = TrainerNewForm(request.POST)
+        form = TrainerNewForm(request.POST, request.FILES)
         user = request.session['user_id']
         user_id = User.objects.get(user_id=user)
 
         if form.is_valid():
             trainer = form.save(commit=False)
             trainer.writer = user_id
+            if request.FILES:
+                if 'image' in request.FILES.keys():
+                    trainer.imagename = request.FILES['image'].name
+            #     if 'upload_files' in request.FILES.keys():
+            #         trainer.filename = request.FILES['upload_files'].name
             trainer.save()
             trainer.hashtag_save()
             trainer.genre_save()
@@ -151,11 +163,21 @@ def trainer_update(request, trainer_id):
 
     if request.method == "POST":
         if trainer.writer == request.user or request.user.level == '0':
-            form = TrainerNewForm(request.POST, instance=trainer)
+            image_change_check = request.POST.get('imageChange', False)
+            image_check = request.POST.get('image-clear', False)
+
+            if image_check or image_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.image.path))
+            form = TrainerNewForm(request.POST, request.FILES, instance=trainer)
             writer = trainer.writer
             if form.is_valid():
                 trainer = form.save(commit=False)
                 trainer.writer = writer
+                if request.FILES:
+                    if 'image' in request.FILES.keys():
+                        trainer.imagename = request.FILES['image'].name
+                #     if 'upload_files' in request.FILES.keys():
+                #         trainer.filename = request.FILES['upload_files'].name
                 trainer.save()
                 trainer.hashtag_save()
                 trainer.genre_save()
@@ -169,6 +191,12 @@ def trainer_update(request, trainer_id):
                 'form': form,
                 'update': '수정하기',
             }
+            if trainer.imagename and trainer.image:
+                context['imagename'] = trainer.imagename
+                context['image_url'] = trainer.image.url
+            # if trainer.filename and trainer.upload_files:
+            #     context['filename'] = trainer.filename
+            #     context['file_url'] = trainer.upload_files.url
             return render(request, "trainer/trainer_new.html", context)
         else:
             messages.error(request, "본인 게시글만 수정할 수 있습니다.")
@@ -203,3 +231,4 @@ def trainer_search(request):
     else:
         messages.error(request, '검색어를 입력해주세요.')
     return render(request, 'trainer/trainer_search.html', {'b': b, 'trainer_list': search_result})
+

@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block contents %}
+{% load static %}
 <h1>{{ trainer.name }}</h1>
+<img src="{{ trainer.image.url }}">
 <p><strong>작성:</strong>{{ trainer.writer }}</p>
 <p><strong>분야: </strong>{% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 <p><strong>지역:</strong>{{ trainer.address }}</p>
@@ -11,34 +13,32 @@
 <p>{{ trainer.summary | safe}}</p>
 
 <p><a href="{% url 'trainer-update' trainer.id %}">modify</a></p>
-<!--<p><a href="{% url 'trainer-delete' trainer.id %}">delete</a></p>-->
-<button class="btn btn-sm" id="detail_btn" data-toggle="modal" data-target="#delete_modal">삭제</button>
+<p><a href="{% url 'trainer-delete' trainer.id %}">delete</a></p>
+<!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">삭제</button>-->
 
-<div id="delete_modal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">삭제경고</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>게시글을 삭제하시겠습니까?</p>
-            </div>
-            <div class="modal-footer">
-                <button onclick="delete_modal()" type="button" class="btn btn-dark">삭제하기</button>
-                <button type="button" class="btn btn-light" data-dismiss="modal">취소하기</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!--<div id="deleteModal" class="modal fade" tabindex="-1" aria-hidden="true">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title">삭제경고</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                <p>게시글을 삭제하시겠습니까?</p>-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button onclick="delete_modal()" type="button" class="btn btn-dark">삭제하기</button>-->
+<!--                <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소하기</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
-<script type="text/javascript">
-    function delete_modal() {
-        location.replace('/trainer/{{ trainer.id }}/delete/');
-    }
-</script>
+<!--<script type="text/javascript">-->
+<!--    function delete_modal() {-->
+<!--        location.replace('/trainer/{{ trainer.id }}/delete/');-->
+<!--    }-->
+<!--</script>-->
 
 {% if notice_auth or request.user.level == '0' %}
 <p><a href="">new class</a></p>

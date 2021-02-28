@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.core.checks import messages
+from django.shortcuts import redirect
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
@@ -29,3 +31,9 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
+# def protected_files(request, path, document_root=None):
+#     messages.error(request, "접근 불가")
+#     return redirect('/')
+#
+#
+# urlpatterns += static(settings.MEDIA_URL, protected_files, document_root=settings.MEDIA_ROOT)
