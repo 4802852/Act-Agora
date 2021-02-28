@@ -8,14 +8,44 @@
 <p><strong>장소:</strong>{{ trainer.place }}</p>
 <p><strong>특징:</strong>{% for tag in trainer.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 <p><strong>소개: </strong></p>
-<p>{{ trainer.summary | safe }}</p>
+<p>{{ trainer.summary | safe}}</p>
 
 <p><a href="{% url 'trainer-update' trainer.id %}">modify</a></p>
-<p><a href="{% url 'trainer-delete' trainer.id %}">delete</a></p>
+<!--<p><a href="{% url 'trainer-delete' trainer.id %}">delete</a></p>-->
+<button class="btn btn-sm" id="detail_btn" data-toggle="modal" data-target="#delete_modal">삭제</button>
+
+<div id="delete_modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">삭제경고</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>게시글을 삭제하시겠습니까?</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="delete_modal()" type="button" class="btn btn-dark">삭제하기</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">취소하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function delete_modal() {
+        location.replace('/trainer/{{ trainer.id }}/delete/');
+    }
+</script>
+
+{% if notice_auth or request.user.level == '0' %}
 <p><a href="">new class</a></p>
+{% endif %}
 
 <div style="margin-left:20px;margin-top:20px">
-    <h4>강</h4>
+    <h4>강의</h4>
 
     {% for lecture in trainer.lecture_set.all %}
     <hr>

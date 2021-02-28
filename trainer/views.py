@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.db.models import Q
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import TrainerNewForm
 from .models import Genre, Hashtag, Trainer, Lecture, LectureInstance
@@ -57,8 +57,20 @@ class TrainerListView(generic.ListView):
         return context
 
 
-class TrainerDetailView(generic.DetailView):
-    model = Trainer
+def trainer_detail_view(request, pk):
+    trainer = get_object_or_404(Trainer, pk=pk)
+
+    # 접속자가 작성자와 일치하는지 확인
+    if request.user == trainer.writer:
+        trainer_auth = True
+    else:
+        trainer_auth = False
+
+    context = {
+        'trainer': trainer,
+        'trainer_auth': trainer_auth,
+    }
+    return render(request, 'trainer/trainer_detail.html', context)
 
 
 class LectureListView(generic.ListView):
@@ -119,38 +131,60 @@ def trainer_new(request):
     if request.method == "POST":
         form = TrainerNewForm(request.POST)
         user = request.session['user_id']
-        user_id = User.objects.get(user_id = user)
+        user_id = User.objects.get(user_id=user)
 
         if form.is_valid():
-            trainer = form.save(commit = False)
+            trainer = form.save(commit=False)
             trainer.writer = user_id
             trainer.save()
             trainer.hashtag_save()
-            return redirect('/trainer/' + str(trainer.id))
+            trainer.genre_save()
+            return redirect('trainer-detail', trainer.id)
     else:
         form = TrainerNewForm()
     return render(request, 'trainer/trainer_new.html', {'form': form})
 
 
+@login_message_required
 def trainer_update(request, trainer_id):
     trainer = Trainer.objects.get(id=trainer_id)
 
     if request.method == "POST":
-        trainer.name = request.POST['trainer_name']
-        trainer.tagtext = request.POST['tagtext']
-        trainer.summary = request.POST['summary']
-        trainer.save()
-        trainer.hashtag_save()
-        return redirect('/trainer/' + str(trainer.id))
+        if trainer.writer == request.user or request.user.level == '0':
+            form = TrainerNewForm(request.POST, instance=trainer)
+            writer = trainer.writer
+            if form.is_valid():
+                trainer = form.save(commit=False)
+                trainer.writer = writer
+                trainer.save()
+                trainer.hashtag_save()
+                trainer.genre_save()
+                messages.success(request, "수정되었습니다.")
+                return redirect('trainer-detail', trainer.id)
     else:
-        old = Trainer.objects.get(id=trainer_id)
-        return render(request, 'board/trainer_update.html', {'trainer': old})
+        trainer = Trainer.objects.get(id=trainer_id)
+        if trainer.writer == request.user or request.user.level == '0':
+            form = TrainerNewForm(instance=trainer)
+            context = {
+                'form': form,
+                'update': '수정하기',
+            }
+            return render(request, "trainer/trainer_new.html", context)
+        else:
+            messages.error(request, "본인 게시글만 수정할 수 있습니다.")
+            return redirect('trainer-detail', trainer.id)
 
 
+@login_message_required
 def trainer_delete(request, trainer_id):
     trainer = Trainer.objects.get(id=trainer_id)
-    trainer.delete()
-    return redirect('/trainers/')
+    if trainer.writer == request.user or request.user.level =='0':
+        trainer.delete()
+        messages.success(request, "삭제되었습니다.")
+        return redirect('accounts:mypage')
+    else:
+        messages.error(request, "본인 게시글만 삭제할 수 있습니다.")
+    return redirect('trainer-detail', trainer.id)
 
 
 def trainer_search(request):

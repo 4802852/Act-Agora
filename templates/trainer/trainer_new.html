@@ -1,13 +1,14 @@
 {% extends 'accounts/mypage_nav.html' %}
 
-{% block header %}
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote-bs4.min.js"></script>
+{% block header2 %}
+{% load static %}
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.js"></script>
 <script type="text/javascript" src="/static/js/lang/summernote-ko-KR.js"></script>
 {% endblock %}
 
 {% block contents %}
-<form method="POST" action="">
+<form method="POST" action="" enctype="multipart/form-data" >
     {% csrf_token %}
     <p><strong>이름: </strong>{{ form.name }}</p>
     <p><strong>분야: </strong>{{ form.genretext }}</p>
@@ -15,32 +16,43 @@
     <p><strong>장소: </strong>{{ form.place }}</p>
     <p><strong>Hashtag: </strong>{{ form.tagtext }}</p>
     <p><strong>summary:</strong></p>
-    <div id="summernote"></div>
-    <textarea class="textarea_field" name="summary"></textarea>
+    <textarea id="summernote" name="summary">{% if update %}{{ form.summary.value | safe }}{% endif %}</textarea>
+    {% if update %}
+    <button id="write" type="submit" class="btn btn-primary">수정</button>
+    {% else %}
     <button id="write" class="btn btn-primary" type="submit">등록</button>
+    {% endif %}
 </form>
-
 <script>
-    $(document).ready(function () {
-        $('#id_content').summernote({
-            placeholder: '내용을 입력해주세요.',
-            height: 500,
-            minHeight: 500,
-            maxHeight: 500,
-            lang: 'ko-KR',
+$(document).ready(function() {
+    $('#summernote').summernote({
+        height: 500,
+        minHeight: 500,
+        maxHeight: 500,
+        lang: 'ko-KR',
 
-            toolbar: [
-            ['style', ['style']],
-            ['font', ['bold', 'underline', 'clear']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']],
-            ['insert', ['link', 'picture', 'video']],
-            ['view', ['fullscreen', 'help']]
-            ]
-        });
-        $('p').css('margin-bottom','0')
-        $('.note-resizebar').css('display','none');
+        toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'help']]
+        ]
+    });
+<!--    $('p').css('margin-bottom','0')-->
+    $('.note-resizebar').css('display','none');
+});
+</script>
+<script type="text/javascript">
+    var checkUnload = true;
+    $(window).on('beforeunload', function () {
+        if (checkUnload) return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.";
+    });
+    $("#write").on("click", function () {
+        checkUnload = false;
+        $("submit").submit();
     });
 </script>
 {% endblock %}

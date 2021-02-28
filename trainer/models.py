@@ -28,15 +28,15 @@ class Hashtag(models.Model):
 
 class Trainer(models.Model):
     """Model representing a trainer (not a specific class)"""
-    writer = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE, verbose_name='작성자')
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE, verbose_name='작성자')
     name = models.CharField(max_length=10, verbose_name='이름')
-    genretext = models.CharField(max_length=200, blank=True)
-    genre = models.ManyToManyField(Genre, blank=True, verbose_name='장르')
-    address = models.CharField(max_length=20, blank=True, verbose_name='지역')
-    place = models.CharField(max_length=20, blank=True, verbose_name='장소')
-    summary = models.TextField(max_length=1000, blank=True)
-    tagtext = models.CharField(max_length=200, blank=True)
-    hashtag = models.ManyToManyField(Hashtag, blank=True)
+    genretext = models.CharField(max_length=200, null=True)
+    genre = models.ManyToManyField(Genre, null=True, blank=True, verbose_name='장르')
+    address = models.CharField(max_length=40, null=True, verbose_name='지역')
+    place = models.CharField(max_length=40, null=True, verbose_name='장소')
+    summary = models.TextField(null=True, blank=True)
+    tagtext = models.CharField(max_length=200, null=True, blank=True)
+    hashtag = models.ManyToManyField(Hashtag, null=True, blank=True)
 
     def hashtag_save(self):
         self.hashtag.set([])
