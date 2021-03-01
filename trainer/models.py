@@ -113,7 +113,6 @@ class Lecture(models.Model):
     """Model representing the lecture(but not a specific class)."""
     trainer = models.ForeignKey('Trainer', on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=20, verbose_name='강의명')
-    genre = models.ManyToManyField(Genre, verbose_name='장르', blank=True)
     summary = models.TextField(max_length=1000, verbose_name='강의 설명')
 
     def __str__(self):
@@ -205,5 +204,3 @@ class LectureInstance(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{ self.lecture }, { self.weekday }, { self.time }'
-
-

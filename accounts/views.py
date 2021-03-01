@@ -89,7 +89,6 @@ class LoginView(FormView):
     form_class = LoginForm
     success_url = '/'
 
-
     def form_valid(self, form):
         user_id = form.cleaned_data.get('user_id')
         password = form.cleaned_data.get('password')

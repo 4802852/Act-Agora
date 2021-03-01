@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'NotoSansKR';
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),
+         url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),
+         url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');
+}
+
+@font-face {
+ font-family: 'NanumSquareR';
+ font-weight: 400;
+ src: url(./static/fonts/NanumSquareR.eot);
+ src: url(./static/fonts/NanumSquareR.eot?#iefix) format('embedded-opentype'),
+      url(./static/fonts/NanumSquareR.woff) format('woff'),
+      url(./static/fonst/NanumSquareR.ttf) format('truetype');
+}
+
+@font-face {
+ font-family: 'NanumSquareB';
+ font-weight: 700;
+ src: url(./static/fonts/NanumSquareB.eot);
+ src: url(./static/fonts/NanumSquareB.eot?#iefix) format('embedded-opentype'),
+      url(./static/fonts/NanumSquareB.woff) format('woff'),
+      url(./static/fonst/NanumSquareB.ttf) format('truetype');
+}
+
+body {
+    font-family: NotoSansKR;
+}
+
+top-menus {
+    font-family: NanumSquareB;
+}

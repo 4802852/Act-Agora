@@ -28,3 +28,7 @@ urlpatterns += [
 urlpatterns += [
     path('search/', views.trainer_search, name='search'),
 ]
+
+urlpatterns += [
+    path('accounts/mypage/mylist/', views.trainer_mylist, name='trainer-mylist'),
+]

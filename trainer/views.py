@@ -1,20 +1,18 @@
 from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, Http404
 
 from .forms import TrainerNewForm
 from .models import Genre, Hashtag, Trainer, Lecture, LectureInstance
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 from accounts.decorators import login_message_required
 from accounts.models import User
+from review.models import Review
 
-import urllib
 import os
-import mimetypes
-
 from PTin import settings
 
 
@@ -66,6 +64,7 @@ class TrainerListView(generic.ListView):
 
 def trainer_detail_view(request, pk):
     trainer = get_object_or_404(Trainer, pk=pk)
+    request.session['trainer_id'] = trainer.writer_id
 
     # 접속자가 작성자와 일치하는지 확인
     if request.user == trainer.writer:
@@ -77,6 +76,26 @@ def trainer_detail_view(request, pk):
         'trainer': trainer,
         'trainer_auth': trainer_auth,
     }
+
+    trainer_review = Review.objects.filter(trainer=trainer)
+    if len(trainer_review) > 5:
+        context['is_paginated'] = True
+    paginator = Paginator(trainer_review, 5)
+    page_numbers_range = 5
+    max_index = len(paginator.page_range)
+
+    page = request.GET.get('page')
+    current_page = int(page) if page else 1
+
+    start_index = int((current_page - 1) / page_numbers_range) * page_numbers_range
+    end_index = start_index + page_numbers_range
+    if end_index >= max_index:
+        end_index = max_index
+
+    page_range = paginator.page_range[start_index:end_index]
+    page_obj = paginator.get_page(page)
+    context['page_range'] = page_range
+    context['page_obj'] = page_obj
     return render(request, 'trainer/trainer_detail.html', context)
 
 
@@ -230,5 +249,11 @@ def trainer_search(request):
             )
     else:
         messages.error(request, '검색어를 입력해주세요.')
-    return render(request, 'trainer/trainer_search.html', {'b': b, 'trainer_list': search_result})
+    return render(request, 'trainer/trainer_list.html', {'b': b, 'trainer_list': search_result})
 
+
+def trainer_mylist(request):
+    user = request.session['user_id']
+    user_id = User.objects.get(user_id=user)
+    mylist = Trainer.objects.filter(writer=user_id)
+    return render(request, 'trainer/trainer_mylist.html', {'trainer_list': mylist})

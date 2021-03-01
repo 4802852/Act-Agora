@@ -7,7 +7,7 @@
 <script type="text/javascript" src="/static/js/lang/summernote-ko-KR.js"></script>
 {% endblock %}
 
-{% block contents %}
+{% block contents2 %}
 <form method="POST" action="" enctype="multipart/form-data" >
     {% csrf_token %}
     <p><strong>이름: </strong>{{ form.name }}</p>
@@ -18,7 +18,7 @@
     <p><strong>장소: </strong>{{ form.place }}</p>
     <p><strong>Hashtag: </strong>{{ form.tagtext }}</p>
 <!--    <p><strong>사진: </strong>{{ form.upload_files }}</p>-->
-    <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">
+<!--    <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">-->
     <p><strong>summary:</strong></p>
     <textarea id="summernote" name="summary">{% if update %}{{ form.summary.value | safe }}{% endif %}</textarea>
     {% if update %}
@@ -45,7 +45,6 @@ $(document).ready(function() {
         ['view', ['fullscreen', 'help']]
         ]
     });
-<!--    $('p').css('margin-bottom','0')-->
     $('.note-resizebar').css('display','none');
 });
 </script>

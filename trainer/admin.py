@@ -1,7 +1,6 @@
 from django.contrib import admin
 from trainer.models import Genre, Hashtag, Trainer, Lecture, LectureInstance
 
-
 admin.site.register(Genre)
 admin.site.register(Hashtag)
 
@@ -15,7 +14,7 @@ class TrainerAdmin(admin.ModelAdmin):
     list_display = ('writer', 'name', 'display_genre')
     fields = ['writer', 'name', 'genre', 'address', 'place', 'hashtag', 'summary']
     search_fields = ('writer__user_id', 'name')
-    inlines = [LectureInline]
+    # inlines = [LectureInline]
 
 
 class LectureInstanceInline(admin.TabularInline):

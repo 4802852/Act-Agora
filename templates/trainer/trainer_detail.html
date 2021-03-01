@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block contents %}
-{% load static %}
 <h1>{{ trainer.name }}</h1>
 <img src="{{ trainer.image.url }}">
 <p><strong>작성:</strong>{{ trainer.writer }}</p>
@@ -44,14 +43,60 @@
 <p><a href="">new class</a></p>
 {% endif %}
 
-<div style="margin-left:20px;margin-top:20px">
-    <h4>강의</h4>
+<p><a href="{% url 'review:review-new' %}">리뷰쓰기</a></p>
 
-    {% for lecture in trainer.lecture_set.all %}
-    <hr>
-    <p><strong>Name: </strong><a href="{{ lecture.get_absolute_url }}">{{ lecture.name }}</a></p>
-    <p><strong>Place: </strong>{{ lecture.gym }}</p>
-    <p><strong>Genre: </strong>{{ lecture.display_genre }}</p>
+{% if page_obj %}
+{% for review in page_obj %}
+<a href="{{ review.get_absolute_url }}">
+    <div class="row">
+        <div class="col-6">{{ review.title }}</div>
+        <div class="col-3">{{ review.writer }}</div>
+        <div class="col-3">{{ review.date }}</div>
+    </div>
+</a>
+{% endfor %}
+{% endif %}
+
+{% if is_paginated %}
+<ul class="pagination">
+    {% if page_obj.has_previous %}
+    <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
+            tabindex="-1">이전</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1">이전</a>
+    </li>
+    {% endif %}
+
+    {% for page in page_range %}
+    <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+        <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+    </li>
     {% endfor %}
-</div>
+
+    {% if page_obj.has_next %}
+    <li class="page-item">
+        <a class="page-link"
+            href="?page={{ page_obj.next_page_number }}">다음</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+        <a class="page-link" href="#">다음</a>
+    </li>
+    {% endif %}
+</ul>
+{% endif %}
+
+<!--<div style="margin-left:20px;margin-top:20px">-->
+<!--    <h4>강의</h4>-->
+
+<!--    {% for lecture in trainer.lecture_set.all %}-->
+<!--    <hr>-->
+<!--    <p><strong>Name: </strong><a href="{{ lecture.get_absolute_url }}">{{ lecture.name }}</a></p>-->
+<!--    <p><strong>Place: </strong>{{ lecture.gym }}</p>-->
+<!--    <p><strong>Genre: </strong>{{ lecture.display_genre }}</p>-->
+<!--    {% endfor %}-->
+<!--</div>-->
 {% endblock %}

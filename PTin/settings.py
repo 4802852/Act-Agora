@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'trainer',
     'accounts.apps.AccountConfig',
     'imagekit',
+    'review.apps.ReviewConfig',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block contents %}
+<h1>{{ review.title }}</h1>
+<p><strong>작성자:</strong>{{ review.writer }}</p>
+<p><strong>트레이너:</strong>{{ review.trainer.name }} ({{ review.trainer.writer }})</p>
+<p><strong>분야: </strong>{% for genre in review.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<p><strong>특징:</strong>{% for tag in review.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+<p><strong>내용: </strong></p>
+<p>{{ review.content | safe}}</p>
+
+<p><a href="{% url 'review:review-update' review.id %}">modify</a></p>
+<p><a href="{% url 'review:review-delete' review.id %}">delete</a></p>
+{% endblock %}

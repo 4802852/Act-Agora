@@ -38,11 +38,11 @@
         </div>
         <div class="container-fluid" style="background-color: #ABD0BC">
             <div class="container">
-                <div class="row">
+                <div class="row" id="top-menus">
                     <div class="col-sm-3 col-3" align="center" style="border:1px solid black"><a href="{% url 'index' %}">About Us</a></div>
                     <div class="col-sm-3 col-3" align="center" style="border:1px solid black"><a href="{% url 'trainers' %}">트레이너 정보</a></div>
                     <div class="col-sm-3 col-3" align="center" style="border:1px solid black"><a href="{% url 'lectures' %}">레슨 신청</a></div>
-                    <div class="col-sm-3 col-3" align="center" style="border:1px solid black"><a href="">고객 후기</a></div>
+                    <div class="col-sm-3 col-3" align="center" style="border:1px solid black"><a href="{% url 'review:reviews' %}">고객 후기</a></div>
                 </div>
             </div>
         </div>
