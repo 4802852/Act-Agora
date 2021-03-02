@@ -25,14 +25,31 @@
 
 body {
     font-family: NotoSansKR;
+    background-color: #F8F8F8;
 }
 
 div#top-menu-bg {
-    background-color: #819FF7
+    background-color: #819FF7;
 }
 
 div#top-menu-btn {
     background-color: #CED8F6;
      border-radius: 14px;
       border:5px solid #819FF7;
+}
+
+a:link {text-decoration: none; color: #151515;}
+a:visited {text-decoration: none; color: #6E6E6E;}
+a:active {text-decoration: none; color: #151515;}
+a:hover {text-decoration: none; color: #6E6E6E;}
+
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 30px;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }

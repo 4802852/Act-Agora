@@ -57,7 +57,7 @@ class Trainer(models.Model):
     # upload_files = models.FileField(upload_to=get_file_path, null=True, blank=True, verbose_name='파일')
     # filename = models.CharField(max_length=64, null=True, verbose_name='첨부파일명')
     image = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[ResizeToFill(500, 500, upscale=False)], null=True, blank=True,
+        upload_to=get_profile_image_path, processors=[ResizeToFill(width=500, height=500, upscale=False)], null=True, blank=True,
         format='JPEG', options={'quality': 90}, verbose_name="프로필 이미지"
     )
     imagename = models.CharField(max_length=64, null=True, verbose_name='이미지파일')

@@ -244,7 +244,7 @@ def trainer_search(request):
             | Q(genre__name__icontains=b)
             | Q(address__icontains=b)
             | Q(place__icontains=b)
-            | Q(tag__name__icontains=b)
+            | Q(hashtag__name__icontains=b)
             | Q(summary__icontains=b)
             )
     else:

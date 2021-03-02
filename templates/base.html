@@ -9,7 +9,8 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}" />
         {% block header %}{% endblock %}
     </head>
-    <body style="background-color: #F8F8F8">
+
+    <body>
     {% load has_group %}
         <div class="container-fluid" style="background-color: #E7E7E7">
             <div class="container">
@@ -19,9 +20,12 @@
                     </div>
                     <div id="top-userinfo" class="col-8 col-md-3 order-md-2" align="right" style="margin: auto; font-size: 13px">
                         {% if user.is_authenticated %}
-                            환영합니다, {{ user.get_username }} 님<br><a class="btn btn-primary btn-sm" style="vertical-align: middle" href="{% url 'accounts:logout' %}">Logout</a> <a class="btn btn-primary btn-sm" style="vertical-align: middle" href="{% url 'accounts:mypage' %}">My Page</a>
+                            환영합니다, {{ user.get_username }} 님<br>
+                            <a href="{% url 'accounts:logout' %}"><button class="btn btn-primary btn-sm" style="vertical-align: middle">Logout</button></a>
+                            &nbsp;<a href="{% url 'accounts:mypage' %}"><button class="btn btn-primary btn-sm" style="vertical-align: middle">My Page</button></button></a>
                         {% else %}
-                            <a class="btn btn-primary btn-sm" style="vertical-align: middle" href="{% url 'accounts:login' %}?next={{ request.path }}">Login</a> <a class="btn btn-primary btn-sm" style="vertical-align: middle" href="{% url 'accounts:agreement' %}">SignUp</a>
+                            <a \ href="{% url 'accounts:login' %}?next={{ request.path }}"><button class="btn btn-primary btn-sm" style="vertical-align: middle">Login</button></a>
+                            &nbsp;<a href="{% url 'accounts:agreement' %}"><button class="btn btn-primary btn-sm" style="vertical-align: middle">Sign Up</button></a>
                         {% endif %}
                     </div>
                     <div id="top-search" class="col-12 col-md-6 order-md-1">
@@ -36,17 +40,17 @@
         <div id="top-menu-bg" class="container-fluid">
             <div class="container">
                 <div class="row">
-                    <div id="top-menu-btn" class="col-sm-3 col-3" align="center"><a class="btn btn-sm" href="{% url 'index' %}">About Us</a></div>
-                    <div id="top-menu-btn" class="col-sm-3 col-3" align="center"><a class="btn btn-sm" href="{% url 'trainers' %}">트레이너 정보</a></div>
-                    <div id="top-menu-btn" class="col-sm-3 col-3" align="center"><a class="btn btn-sm" href="{% url 'lectures' %}">레슨 신청</a></div>
-                    <div id="top-menu-btn" class="col-sm-3 col-3" align="center"><a class="btn btn-sm" href="{% url 'review:reviews' %}">고객 후기</a></div>
+                    <div id="top-menu-btn" class="col-sm-3 col-3" align="center"><a  href="{% url 'index' %}"><button class="btn btn-sm">About Us</button></a></div>
+                    <div id="top-menu-btn" class="col-sm-3 col-3" align="center"><a  href="{% url 'trainers' %}"><button class="btn btn-sm">트레이너 정보</button></a></div>
+                    <div id="top-menu-btn" class="col-sm-3 col-3" align="center"><a  href="{% url 'lectures' %}"><button class="btn btn-sm">레슨 신청</button></a></div>
+                    <div id="top-menu-btn" class="col-sm-3 col-3" align="center"><a  href="{% url 'review:reviews' %}"><button class="btn btn-sm">고객 후기</button></a></div>
                 </div>
             </div>
         </div>
         <p>&nbsp;</p>
         <div class="container">
             <div class="row">
-                <div class="col-sm-12 col-12" style="margin: auto" style="border:1px solid black">
+                <div class="col-sm-12 col-12" style="margin: auto">
                     {% block contents %}{% endblock %}
 
                     {% if messages %}
