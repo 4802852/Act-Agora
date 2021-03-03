@@ -2,9 +2,9 @@
 
 {% block header2 %}
 {% load static %}
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.js"></script>
-<script type="text/javascript" src="/static/js/lang/summernote-ko-KR.js"></script>
+<link href="{% static 'css/summernote-lite.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'js/summernote-lite.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lang/summernote-ko-KR.js' %}"></script>
 {% endblock %}
 
 {% block contents2 %}
@@ -27,6 +27,7 @@
     <button id="write" class="btn btn-primary" type="submit">등록</button>
     {% endif %}
 </form>
+
 <script>
 $(document).ready(function() {
     $('#summernote').summernote({
@@ -37,12 +38,11 @@ $(document).ready(function() {
 
         toolbar: [
         ['style', ['style']],
-        ['font', ['bold', 'underline', 'clear']],
+        ['font', ['bold', 'underline', 'clear', 'fontsize']],
         ['color', ['color']],
         ['para', ['ul', 'ol', 'paragraph']],
         ['table', ['table']],
-        ['insert', ['link', 'picture', 'video']],
-        ['view', ['fullscreen', 'help']]
+        ['insert', ['link', 'picture', 'video']]
         ]
     });
     $('.note-resizebar').css('display','none');

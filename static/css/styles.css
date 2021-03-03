@@ -8,19 +8,19 @@
 @font-face {
  font-family: 'NanumSquareR';
  font-weight: 400;
- src: url(./static/fonts/NanumSquareR.eot);
- src: url(./static/fonts/NanumSquareR.eot?#iefix) format('embedded-opentype'),
-      url(./static/fonts/NanumSquareR.woff) format('woff'),
-      url(./static/fonst/NanumSquareR.ttf) format('truetype');
+ src: url(./static/font/NanumSquareR.eot);
+ src: url(./static/font/NanumSquareR.eot?#iefix) format('embedded-opentype'),
+      url(./static/font/NanumSquareR.woff) format('woff'),
+      url(./static/font/NanumSquareR.ttf) format('truetype');
 }
 
 @font-face {
  font-family: 'NanumSquareB';
  font-weight: 700;
- src: url(./static/fonts/NanumSquareB.eot);
- src: url(./static/fonts/NanumSquareB.eot?#iefix) format('embedded-opentype'),
-      url(./static/fonts/NanumSquareB.woff) format('woff'),
-      url(./static/fonst/NanumSquareB.ttf) format('truetype');
+ src: url(./static/font/NanumSquareB.eot);
+ src: url(./static/font/NanumSquareB.eot?#iefix) format('embedded-opentype'),
+      url(./static/font/NanumSquareB.woff) format('woff'),
+      url(./static/font/NanumSquareB.ttf) format('truetype');
 }
 
 body {
@@ -52,4 +52,27 @@ a:hover {text-decoration: none; color: #6E6E6E;}
 
 .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+button {
+    vertical-align: middle;
+}
+
+input {
+    vertical-align: middle;
+}
+
+#board-top {
+    text-align: center;
+    border-top: 1px solid #A4A4A4;
+    border-bottom: 1px solid #A4A4A4;
+    background-color: #CEE3F6
+}
+
+#board-content {
+    border-bottom: 1px solid #E6E6E6"
+}
+
+.target {
+    padding: 60 20 0 20
 }

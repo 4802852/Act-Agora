@@ -20,8 +20,9 @@
                             <div class="row my-3 justify-content-center" style="text-align: center">
                                 <img style="width: 70%; margin-bottom: 15px; border-radius: 20px; padding: 0px" src="{{ trainer.image.url }}">
                                 <p style="font-size: 20px">{{ trainer.name }}<small>({% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %})</small></p>
-                                <p style="font-size: 15px">{{ trainer.place }} ( {{ trainer.address }} )</p>
-                                <p style="font-size: 15px">{% for hashtag in trainer.hashtag.all %}#{{ hashtag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                                <p style="font-size: 15px; margin-bottom: 1">{{ trainer.place }}</p>
+                                <p style="font-size: 10px">( {{ trainer.address }} )</p>
+                                <p style="font-size: 8px">{% for hashtag in trainer.hashtag.all %}#{{ hashtag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                             </div>
                         </a>
                     </div>
@@ -39,9 +40,9 @@
     {% endif %}
 </div>
 
-<center>
+
 {% if is_paginated %}
-<ul class="pagination">
+<ul class="pagination justify-content-center" style="margin-top: 7px">
     {% if page_obj.has_previous %}
     <li class="page-item">
         <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
@@ -71,7 +72,7 @@
     {% endif %}
 </ul>
 {% endif %}
-</center>
+
 
 
 <br><br><br>

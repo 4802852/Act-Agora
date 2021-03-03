@@ -1,35 +1,21 @@
 {% extends 'base.html' %}
 
 {% block contents %}
-<script>
-$(function() {
-    $("#nav div a").on('click', function(event) {
-        $(this).parent().find('a').removeClass("active");
-        $(this).addClass("active");
-    });
-
-    $(window).on('scroll', function() {
-        $('.target').each(function() {
-            if($(window).scrollTop() >= ($(this).offset().top - 200)) {
-                var id = $(this).attr('id');
-                $('#nav div a').removeClass('active');
-                $('#nav div a[href$="#'+ id + '"]').addClass('active');
-            }
-        });
-    });
-});
-</script>
 <nav id="nav" style="position: sticky; top: 0; padding-top: 10; background-color: #F8F8F8">
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-link active" id="tab1" data-bs-toggle="tab" href="#1" role="tab" aria-controls="tab1" aria-selected="true">트레이너 정보</a>
+        <a class="nav-link active" id="tab1" data-bs-toggle="tab" href="#1" role="tab" aria-controls="tab1" aria-selected="true">About</a>
         <a class="nav-link" id="tab2" data-bs-toggle="tab" href="#2" role="tab" aria-controls="tab2" aria-selected="false">후기</a>
-        <a class="nav-link" id="tab3" data-bs-toggle="tab" href="#3" role="tab" aria-controls="tab3" aria-selected="false">트레이너 소개</a>
-        <a class="nav-link" id="tab4" data-bs-toggle="tab" href="#4" role="tab" aria-controls="tab4" aria-selected="false">가격 정보</a>
-        <a class="nav-link" id="tab5" data-bs-toggle="tab" href="#5" role="tab" aria-controls="tab5" aria-selected="false">센터 및 위치 안내</a>
+        <a class="nav-link" id="tab3" data-bs-toggle="tab" href="#3" role="tab" aria-controls="tab3" aria-selected="false">소개</a>
+        <a class="nav-link" id="tab4" data-bs-toggle="tab" href="#4" role="tab" aria-controls="tab4" aria-selected="false">자격/경력</a>
+        <a class="nav-link" id="tab5" data-bs-toggle="tab" href="#5" role="tab" aria-controls="tab5" aria-selected="false">이용가격</a>
+        <a class="nav-link" id="tab6" data-bs-toggle="tab" href="#6" role="tab" aria-controls="tab6" aria-selected="false">바로가기</a>
+        <a class="nav-link" id="tab7" data-bs-toggle="tab" href="#7" role="tab" aria-controls="tab7" aria-selected="false">위치</a>
+<!--        <a class="nav-link" id="tab5" data-bs-toggle="tab" href="#5" role="tab" aria-controls="tab7" aria-selected="false">위치</a>-->
+
     </div>
 </nav>
 <div class="tab-content" id="nav-tabContent" style="background-color: white; border-right: 1px solid #E6E6E6; border-left: 1px solid #E6E6E6">
-    <div class="target" id="1" role="tabpanel" aria-labelledby="tab1" style="padding-top: 60px">
+    <div class="target" id="1" role="tabpanel" aria-labelledby="tab1">
         <div class="row justify-content-center">
             <div class="col-3">
                 <img class="img-fluid" src="{{ trainer.image.url }}" style="border-radius: 30">
@@ -40,31 +26,43 @@ $(function() {
                 <p><strong>분야: </strong>{% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                 <p><strong>특징:</strong>{% for tag in trainer.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
             </div>
+            <div class="col-9">
+            {% if notice_auth or request.user.level == '0' %}
+                <a href="{% url 'trainer-update' trainer.id %}"><button class="btn btn-outline-secondary"><i class="fas fa-pencil-alt" style="color: gray"></i> 프로필 수정</button></a>
+                <a href="{% url 'trainer-delete' trainer.id %}"><button class="btn btn-outline-secondary"><i class="far fa-trash-alt" style="color: gray"></i> 프로필 삭제</button></a>
+            {% endif %}
+            </div>
         </div>
     </div>
-    <div class="target" id="2" role="tabpanel" aria-labelledby="tab2" style="padding-top: 60px">
+    <div class="target" id="2" role="tabpanel" aria-labelledby="tab2">
         <div class="row justify-content-center">
-            <div class="col-6">
+            <div class="col-8 col-md-6">
                 <h4>트레이너 리뷰</h4>
             </div>
-            <div class="col-3" style="text-align: right">
+            <div class="col-4 col-md-3" style="text-align: right">
                 <a href="{% url 'review:review-new' %}"><button class="btn btn-outline-secondary"><i class="fas fa-pencil-alt" style="color: gray"></i> 리뷰쓰기</button></a>
             </div>
-            <div class="row justify-content-center" style="margin-top: 15; margin-bottom: 7;">
-                <div class="col-4" style="text-align: center; border-top: 1px solid #A4A4A4; border-bottom: 1px solid #A4A4A4">제목</div>
-                <div class="col-2" style="text-align: center; border-top: 1px solid #A4A4A4; border-bottom: 1px solid #A4A4A4">작성자</div>
-                <div class="col-3" style="text-align: center; border-top: 1px solid #A4A4A4; border-bottom: 1px solid #A4A4A4">작성일</div>
+            <div class="row justify-content-center" style="margin-top: 15; margin-bottom: 4">
+                <div id="board-top" class="col-7 col-md-5">제목</div>
+                <div id="board-top" class="col-3 col-md-2">작성자</div>
+                <div id="board-top" class="col-2 col-md-2">작성일</div>
             </div>
             {% if page_obj %}
             {% for review in page_obj %}
             <a href="{{ review.get_absolute_url }}">
-                <div class="row justify-content-center" style="margin-top: 3; margin-bottom: 3">
-                    <div class="col-4" style="border-bottom: 1px solid #E6E6E6">{{ review.title }}</div>
-                    <div class="col-2" style="text-align: center; border-bottom: 1px solid #E6E6E6">{{ review.writer }}</div>
-                    <div class="col-3" style="text-align: right; border-bottom: 1px solid #E6E6E6">{{ review.date }}</div>
+                <div class="row justify-content-center" style="margin-top: 3; margin-bottom: 3; padding: 0 10 0 10">
+                    <div id="board-content" class="col-7 col-md-5">{{ review.title }}</div>
+                    <div id="board-content" class="col-3 col-md-2" style="text-align: center">{{ review.writer }}</div>
+                    <div id="board-content" class="col-2 col-md-2" style="text-align: center">{{ review.date|date:"n월j일" }}</div>
                 </div>
             </a>
             {% endfor %}
+            {% else %}
+            <div class="row">
+                <div class="col-12" style="text-align: center; margin-top: 50">
+                    <p>아직 등록된 리뷰가 없습니다. 리뷰를 등록해보세요!</p>
+                </div>
+            </div>
             {% endif %}
             {% if is_paginated %}
             <ul class="pagination justify-content-center" style="margin-top: 7px">
@@ -99,14 +97,20 @@ $(function() {
             {% endif %}
         </div>
     </div>
-    <div class="target" id="3" role="tabpanel" aria-labelledby="tab3" style="padding-top: 60px">
-        <p><strong>소개: </strong></p>
-        <p>{{ trainer.summary | safe}}</p>
+    <div class="target" id="3" role="tabpanel" aria-labelledby="tab3">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-9">
+                <h4>트레이너 소개</h4>
+            </div>
+            <div class="col-12 col-md-9">
+                {{ trainer.summary | safe }}
+            </div>
+            <div class="col-12 col-md-9">
 
-        <p><a href="{% url 'trainer-update' trainer.id %}">modify</a></p>
-        <p><a href="{% url 'trainer-delete' trainer.id %}">delete</a></p>
+            </div>
+        </div>
     </div>
-    <div class="target" id="4" role="tabpanel" aria-labelledby="tab4" style="padding-top: 60px">
+    <div class="target" id="4" role="tabpanel" aria-labelledby="tab4">
         <p>o</p>
         <p>o</p>
         <p>o</p>
@@ -115,18 +119,31 @@ $(function() {
         <p>o</p>
         <p>o</p>
         <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
+
     </div>
-    <div class="target" id="5" role="tabpanel" aria-labelledby="tab5" style="padding-top: 60px">
+    <div class="target" id="5" role="tabpanel" aria-labelledby="tab5">
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+
+    </div>
+    <div class="target" id="6" role="tabpanel" aria-labelledby="tab6">
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+        <p>o</p>
+
+    </div>
+    <div class="target" id="7" role="tabpanel" aria-labelledby="tab7">
         <p><strong>지역:</strong>{{ trainer.address }}</p>
         <p><strong>장소:</strong>{{ trainer.place }}</p>
         <p>o</p>
@@ -153,6 +170,24 @@ $(function() {
         <p>o</p>
         <p>o</p>
     </div>
+<!--    <div class="target" id="5" role="tabpanel" aria-labelledby="tab6"></div>-->
 </div>
+<script>
+$(function() {
+    $("#nav div a").on('click', function(event) {
+        $(this).parent().find('a').removeClass("active");
+        $(this).addClass("active");
+    });
 
+    $(window).on('scroll', function() {
+        $('.target').each(function() {
+            if($(window).scrollTop() >= ($(this).offset().top - 250)) {
+                var id = $(this).attr('id');
+                $('#nav div a').removeClass('active');
+                $('#nav div a[href$="#'+ id + '"]').addClass('active');
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

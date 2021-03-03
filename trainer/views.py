@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import TrainerNewForm
-from .models import Genre, Hashtag, Trainer, Lecture, LectureInstance
+from .models import Genre, Hashtag, Trainer, Lecture, LectureInstance, get_file_path
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
