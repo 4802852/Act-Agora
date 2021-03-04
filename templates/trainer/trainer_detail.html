@@ -17,21 +17,45 @@
 <div class="tab-content" id="nav-tabContent" style="background-color: white; border-right: 1px solid #E6E6E6; border-left: 1px solid #E6E6E6">
     <div class="target" id="1" role="tabpanel" aria-labelledby="tab1">
         <div class="row justify-content-center">
-            <div class="col-4">
-                <img class="img-fluid" src="{{ trainer.image.url }}" style="border-radius: 30; max-height: 100px">
+            <div class="col-4 col-md-3" align="right">
+                {% if trainer.image %}
+                <img class="img-fluid" src="{{ trainer.image.url }}" style="border-radius: 75px; max-height: 150px; border: 1px solid #E6E6E6">
+                {% endif %}
             </div>
-            <div class="col-8" style="text-align: left">
+            <div class="col-8 col-md-6" style="text-align: left">
                 <p><span style="font-size: 30">{{ trainer.name }}</span>
                 <span style="font-size: 15">({{ trainer.writer }})</span></p>
                 <p><strong>전문분야: </strong>{% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                 <p>{% for tag in trainer.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
             </div>
-        </div>
-        <div>
-        {% if notice_auth or request.user.level == '0' %}
-            <a href="{% url 'trainer-update' trainer.id %}"><button class="btn btn-outline-secondary"><i class="fas fa-pencil-alt" style="color: gray"></i> 프로필 수정</button></a>
-            <a href="{% url 'trainer-delete' trainer.id %}"><button class="btn btn-outline-secondary"><i class="far fa-trash-alt" style="color: gray"></i> 프로필 삭제</button></a>
-        {% endif %}
+            <div class="col-9" align="center" style="margin-top: 40">
+            {% if notice_auth or request.user.level == '0' %}
+                <a href="{% url 'trainer-update' trainer.id %}"><button class="btn btn-outline-secondary"><i class="fas fa-pencil-alt" style="color: gray"></i> 프로필 수정</button></a>&nbsp;&nbsp;
+<!--                <a href="{% url 'trainer-delete' trainer.id %}"><button class="btn btn-outline-secondary"><i class="far fa-trash-alt" style="color: gray"></i> 프로필 삭제</button></a>-->
+                <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="far fa-trash-alt" style="color: gray"></i> 프로필 삭제</button>
+                <!-- Modal -->
+                <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">삭제경고</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>게시글을 삭제하시겠습니까?</p>
+                                <p>삭제 후에는 자료를 복구할 수 없습니다.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button onclick="delete_modal()" type="button" class="btn btn-dark">삭제하기</button>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
         </div>
     </div>
     <div class="target" id="2" role="tabpanel" aria-labelledby="tab2">
@@ -111,15 +135,89 @@
         </div>
     </div>
     <div class="target" id="4" role="tabpanel" aria-labelledby="tab4">
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-9">
+                <div>
+                    <h4>자격/증명</h4>
+                </div>
+                {% if trainer.cert1 %}
+                <div>
+                    {% if trainer.certimg1 %}
+                    <i class="fas fa-stamp"></i><button data-bs-toggle="modal" data-bs-target="#certimg1"> {{ trainer.cert1 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg1.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp"></i> {{ trainer.cert1 }}
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% if trainer.cert2 %}
+                <div>
+                    {% if trainer.certimg2 %}
+                    <i class="fas fa-stamp"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg2"> {{ trainer.cert2 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg2.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp"></i> {{ trainer.cert2 }}
+                    {% endif %}
+                </div>
+                {% endif %}
+                <div>
+                    {% if trainer.cert3 %}
+                    {{ trainer.cert3 }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if trainer.cert4 %}
+                    {{ trainer.cert4 }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if trainer.cert5 %}
+                    {{ trainer.cert5 }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if trainer.cert6 %}
+                    {{ trainer.cert6 }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if trainer.cert7 %}
+                    {{ trainer.cert7 }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if trainer.cert8 %}
+                    {{ trainer.cert8 }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if trainer.cert9 %}
+                    {{ trainer.cert9 }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if trainer.cert10 %}
+                    {{ trainer.cert10 }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
     <div class="target" id="5" role="tabpanel" aria-labelledby="tab5">
         <p>o</p>
@@ -189,5 +287,10 @@ $(function() {
         });
     });
 });
+</script>
+<script type="text/javascript">
+    function delete_modal() {
+        location.replace('/trainer/{{ trainer.id }}/delete/');
+    }
 </script>
 {% endblock %}

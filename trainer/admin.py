@@ -12,7 +12,7 @@ class LectureInline(admin.TabularInline):
 @admin.register(Trainer)
 class TrainerAdmin(admin.ModelAdmin):
     list_display = ('writer', 'name', 'display_genre')
-    fields = ['writer', 'name', 'genre', 'address', 'place', 'hashtag', 'summary']
+    fields = ['writer', 'name', 'image', 'genre', 'address', 'place', 'hashtag', 'summary']
     search_fields = ('writer__user_id', 'name')
     # inlines = [LectureInline]
 

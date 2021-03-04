@@ -35,3 +35,6 @@ class TrainerNewForm(forms.ModelForm):
     class Meta:
         model = Trainer
         fields = ['writer', 'name', 'genretext', 'address', 'place', 'tagtext', 'image', 'summary']
+        fields += ['cert1', 'certimg1', 'cert2', 'certimg2', 'cert3', 'certimg3', 'cert4', 'certimg4',
+                   'cert5', 'certimg5', 'cert6', 'certimg6', 'cert7', 'certimg7', 'cert8', 'certimg8',
+                   'cert9', 'certimg9', 'cert10', 'certimg10']

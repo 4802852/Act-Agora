@@ -18,7 +18,9 @@
                     <div class="card">
                         <a href="{{ trainer.get_absolute_url }}">
                             <div class="row my-3 justify-content-center" style="text-align: center">
+                                {% if trainer.image %}
                                 <img style="width: 70%; margin-bottom: 15px; border-radius: 20px; padding: 0px" src="{{ trainer.image.url }}">
+                                {% endif %}
                                 <p style="font-size: 20px">{{ trainer.name }}<small>({% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %})</small></p>
                                 <p style="font-size: 15px; margin-bottom: 1">{{ trainer.place }}</p>
                                 <p style="font-size: 10px">( {{ trainer.address }} )</p>
