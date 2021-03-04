@@ -25,7 +25,7 @@
 
 body {
     font-family: NotoSansKR;
-    background-color: #F8F8F8;
+    background-color: #BDBDBD;
 }
 
 div#top-menu-bg {
@@ -66,13 +66,13 @@ input {
     text-align: center;
     border-top: 1px solid #A4A4A4;
     border-bottom: 1px solid #A4A4A4;
-    background-color: #CEE3F6
+    background-color: #CEE3F6;
 }
 
 #board-content {
-    border-bottom: 1px solid #E6E6E6"
+    border-bottom: 1px solid #E6E6E6;
 }
 
 .target {
-    padding: 60 20 0 20
+    padding: 60 20 0 20;
 }

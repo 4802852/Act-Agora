@@ -17,21 +17,21 @@
 <div class="tab-content" id="nav-tabContent" style="background-color: white; border-right: 1px solid #E6E6E6; border-left: 1px solid #E6E6E6">
     <div class="target" id="1" role="tabpanel" aria-labelledby="tab1">
         <div class="row justify-content-center">
-            <div class="col-3">
-                <img class="img-fluid" src="{{ trainer.image.url }}" style="border-radius: 30">
+            <div class="col-4">
+                <img class="img-fluid" src="{{ trainer.image.url }}" style="border-radius: 30; max-height: 100px">
             </div>
-            <div class="col-6">
-                <h1>{{ trainer.name }}</h1>
-                <p><strong>작성:</strong>{{ trainer.writer }}</p>
-                <p><strong>분야: </strong>{% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-                <p><strong>특징:</strong>{% for tag in trainer.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+            <div class="col-8" style="text-align: left">
+                <p><span style="font-size: 30">{{ trainer.name }}</span>
+                <span style="font-size: 15">({{ trainer.writer }})</span></p>
+                <p><strong>전문분야: </strong>{% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                <p>{% for tag in trainer.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
             </div>
-            <div class="col-9">
-            {% if notice_auth or request.user.level == '0' %}
-                <a href="{% url 'trainer-update' trainer.id %}"><button class="btn btn-outline-secondary"><i class="fas fa-pencil-alt" style="color: gray"></i> 프로필 수정</button></a>
-                <a href="{% url 'trainer-delete' trainer.id %}"><button class="btn btn-outline-secondary"><i class="far fa-trash-alt" style="color: gray"></i> 프로필 삭제</button></a>
-            {% endif %}
-            </div>
+        </div>
+        <div>
+        {% if notice_auth or request.user.level == '0' %}
+            <a href="{% url 'trainer-update' trainer.id %}"><button class="btn btn-outline-secondary"><i class="fas fa-pencil-alt" style="color: gray"></i> 프로필 수정</button></a>
+            <a href="{% url 'trainer-delete' trainer.id %}"><button class="btn btn-outline-secondary"><i class="far fa-trash-alt" style="color: gray"></i> 프로필 삭제</button></a>
+        {% endif %}
         </div>
     </div>
     <div class="target" id="2" role="tabpanel" aria-labelledby="tab2">
