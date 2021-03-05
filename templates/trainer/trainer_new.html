@@ -24,24 +24,41 @@
 
     <p>{{ form.cert1 }}</p>
     <p>{{ form.certimg1 }}</p>
+    <input type="checkbox" id="certimg1ChangeCheck" name="certimg1Change" style="display: none;">
     <p>{{ form.cert2 }}</p>
     <p>{{ form.certimg2 }}</p>
+    <input type="checkbox" id="certimg2ChangeCheck" name="certimg2Change" style="display: none;">
     <p>{{ form.cert3 }}</p>
     <p>{{ form.certimg3 }}</p>
+    <input type="checkbox" id="certimg3ChangeCheck" name="certimg3Change" style="display: none;">
     <p>{{ form.cert4 }}</p>
     <p>{{ form.certimg4 }}</p>
+    <input type="checkbox" id="certimg4ChangeCheck" name="certimg4Change" style="display: none;">
     <p>{{ form.cert5 }}</p>
     <p>{{ form.certimg5 }}</p>
+    <input type="checkbox" id="certimg5ChangeCheck" name="certimg5Change" style="display: none;">
     <p>{{ form.cert6 }}</p>
     <p>{{ form.certimg6 }}</p>
+    <input type="checkbox" id="certimg6ChangeCheck" name="certimg6Change" style="display: none;">
     <p>{{ form.cert7 }}</p>
     <p>{{ form.certimg7 }}</p>
+    <input type="checkbox" id="certimg7ChangeCheck" name="certimg7Change" style="display: none;">
     <p>{{ form.cert8 }}</p>
     <p>{{ form.certimg8 }}</p>
+    <input type="checkbox" id="certimg8ChangeCheck" name="certimg8Change" style="display: none;">
     <p>{{ form.cert9 }}</p>
     <p>{{ form.certimg9 }}</p>
+    <input type="checkbox" id="certimg9ChangeCheck" name="certimg9Change" style="display: none;">
     <p>{{ form.cert10 }}</p>
     <p>{{ form.certimg10 }}</p>
+    <input type="checkbox" id="certimg10ChangeCheck" name="certimg10Change" style="display: none;">
+
+    <p>{{ form.sns1 }}</p>
+    <p>{{ form.sns2 }}</p>
+    <p>{{ form.sns3 }}</p>
+    <p>{{ form.sns4 }}</p>
+    <p>{{ form.sns5 }}</p>
+
 
 
     {% if update %}
@@ -83,34 +100,99 @@ $(document).ready(function() {
 </script>
 {% if imagename %}
 <script type = "text/javascript">
-    $('[href="{{ image_url }}"]').html("{{ imagename }}");
-    $('#image-clear_id').css({opacity:'100', position:'relative', 'pointer-events':'auto'})
-
     $("#id_image").change(function() {
         if ($('#id_image').get(0).files.length == 1) {
-            $(".col-sm-12").contents().get(0).nodeValue = '[첨부파일 변경 시 기존 파일은 삭제됩니다.]'
             $('#image-clear_id').attr("checked", false)
-            $('#image-clear_id').prev().hide()
-            $('#image-clear_id').next().hide()
-            $('#image-clear_id').hide()
+        }
+    });
+    $("#id_certimg1").change(function() {
+        if ($('#id_certimg1').get(0).files.length == 1) {
+            $('#certimg1-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg2").change(function() {
+        if ($('#id_certimg2').get(0).files.length == 1) {
+            $('#certimg2-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg3").change(function() {
+        if ($('#id_certimg3').get(0).files.length == 1) {
+            $('#certimg3-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg4").change(function() {
+        if ($('#id_certimg4').get(0).files.length == 1) {
+            $('#certimg4-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg5").change(function() {
+        if ($('#id_certimg5').get(0).files.length == 1) {
+            $('#certimg5-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg6").change(function() {
+        if ($('#id_certimg6').get(0).files.length == 1) {
+            $('#certimg6-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg7").change(function() {
+        if ($('#id_certimg7').get(0).files.length == 1) {
+            $('#certimg7-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg8").change(function() {
+        if ($('#id_certimg8').get(0).files.length == 1) {
+            $('#certimg8-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg9").change(function() {
+        if ($('#id_certimg9').get(0).files.length == 1) {
+            $('#certimg9-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg10").change(function() {
+        if ($('#id_certimg10').get(0).files.length == 1) {
+            $('#certimg10-clear_id').attr("checked", false)
         }
     });
 
-    $('#image-clear_id').on('click', function(){
-        if($(this).prop('checked')){
-            $('#id_image').hide()
-            document.getElementById('id_image').previousSibling.nodeValue = '[업로드 된 첨부파일을 삭제합니다.]'
-        } else{
-            $('#id_image').show()
-            document.getElementById('id_image').previousSibling.nodeValue = '변경: '
-        }
-    });
 
     $('#write').click( function() {
         if($('#id_image').get(0).files.length == 1){
             $('#imageChangeCheck').attr("checked",true)
         }
+        if($('#id_certimg1').get(0).files.length == 1){
+            $('#certimg1ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg2').get(0).files.length == 1){
+            $('#certimg2ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg3').get(0).files.length == 1){
+            $('#certimg3ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg4').get(0).files.length == 1){
+            $('#certimg4ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg5').get(0).files.length == 1){
+            $('#certimg5ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg6').get(0).files.length == 1){
+            $('#certimg6ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg7').get(0).files.length == 1){
+            $('#certimg7ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg8').get(0).files.length == 1){
+            $('#certimg8ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg9').get(0).files.length == 1){
+            $('#certimg9ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg10').get(0).files.length == 1){
+            $('#certimg10ChangeCheck').attr("checked",true)
+        }
     });
+
 </script>
 {% endif %}
 {% endblock %}

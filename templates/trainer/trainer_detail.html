@@ -10,8 +10,7 @@
         <a class="nav-link" id="tab5" data-bs-toggle="tab" href="#5" role="tab" aria-controls="tab5" aria-selected="false">이용가격</a>
         <a class="nav-link" id="tab6" data-bs-toggle="tab" href="#6" role="tab" aria-controls="tab6" aria-selected="false">바로가기</a>
         <a class="nav-link" id="tab7" data-bs-toggle="tab" href="#7" role="tab" aria-controls="tab7" aria-selected="false">위치</a>
-<!--        <a class="nav-link" id="tab5" data-bs-toggle="tab" href="#5" role="tab" aria-controls="tab7" aria-selected="false">위치</a>-->
-
+<!--        <a class="nav-link" id="tab8" data-bs-toggle="tab" href="#8" role="tab" aria-controls="tab8" aria-selected="false">위치</a>-->
     </div>
 </nav>
 <div class="tab-content" id="nav-tabContent" style="background-color: white; border-right: 1px solid #E6E6E6; border-left: 1px solid #E6E6E6">
@@ -20,6 +19,8 @@
             <div class="col-4 col-md-3" align="right">
                 {% if trainer.image %}
                 <img class="img-fluid" src="{{ trainer.image.url }}" style="border-radius: 75px; max-height: 150px; border: 1px solid #E6E6E6">
+                {% else %}
+                <img class="img-fluid" src="/static/img/profile.png" style="border-radius: 75px; max-height: 150px; border: 1px solid #E6E6E6">
                 {% endif %}
             </div>
             <div class="col-8 col-md-6" style="text-align: left">
@@ -129,9 +130,6 @@
             <div class="col-12 col-md-9">
                 {{ trainer.summary | safe }}
             </div>
-            <div class="col-12 col-md-9">
-
-            </div>
         </div>
     </div>
     <div class="target" id="4" role="tabpanel" aria-labelledby="tab4">
@@ -143,9 +141,9 @@
                 {% if trainer.cert1 %}
                 <div>
                     {% if trainer.certimg1 %}
-                    <i class="fas fa-stamp"></i><button data-bs-toggle="modal" data-bs-target="#certimg1"> {{ trainer.cert1 }}</button>
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg1"> {{ trainer.cert1 }}</button>
                     <!-- Modal -->
-                    <div class="modal fade" id="certimg1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="certimg1" tabindex="-1" aria-labelledby="certimg1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -154,16 +152,16 @@
                         </div>
                     </div>
                     {% else %}
-                    <i class="fas fa-stamp"></i> {{ trainer.cert1 }}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert1 }}</button>
                     {% endif %}
                 </div>
                 {% endif %}
                 {% if trainer.cert2 %}
                 <div>
                     {% if trainer.certimg2 %}
-                    <i class="fas fa-stamp"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg2"> {{ trainer.cert2 }}</button>
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg2"> {{ trainer.cert2 }}</button>
                     <!-- Modal -->
-                    <div class="modal fade" id="certimg2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="certimg2" tabindex="-1" aria-labelledby="certimg2" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -172,103 +170,239 @@
                         </div>
                     </div>
                     {% else %}
-                    <i class="fas fa-stamp"></i> {{ trainer.cert2 }}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert2 }}</button>
                     {% endif %}
                 </div>
                 {% endif %}
+                {% if trainer.cert3 %}
                 <div>
-                    {% if trainer.cert3 %}
-                    {{ trainer.cert3 }}
+                    {% if trainer.certimg3 %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg3"> {{ trainer.cert3 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg3" tabindex="-1" aria-labelledby="certimg3" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg3.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert3 }}</button>
                     {% endif %}
                 </div>
+                {% endif %}
+                {% if trainer.cert4 %}
                 <div>
-                    {% if trainer.cert4 %}
-                    {{ trainer.cert4 }}
+                    {% if trainer.certimg4 %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg4"> {{ trainer.cert4 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg4" tabindex="-1" aria-labelledby="certimg4" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg4.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert4 }}</button>
                     {% endif %}
                 </div>
+                {% endif %}
+                {% if trainer.cert5 %}
                 <div>
-                    {% if trainer.cert5 %}
-                    {{ trainer.cert5 }}
+                    {% if trainer.certimg5 %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg5"> {{ trainer.cert5 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg5" tabindex="-1" aria-labelledby="certimg5" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg5.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert5 }}</button>
                     {% endif %}
                 </div>
+                {% endif %}
+                {% if trainer.cert6 %}
                 <div>
-                    {% if trainer.cert6 %}
-                    {{ trainer.cert6 }}
+                    {% if trainer.certimg6 %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg6"> {{ trainer.cert6 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg6" tabindex="-1" aria-labelledby="certimg6" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg6.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert6 }}</button>
                     {% endif %}
                 </div>
+                {% endif %}
+                {% if trainer.cert7 %}
                 <div>
-                    {% if trainer.cert7 %}
-                    {{ trainer.cert7 }}
+                    {% if trainer.certimg7 %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg7"> {{ trainer.cert7 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg7" tabindex="-1" aria-labelledby="certimg7" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg7.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert7 }}</button>
                     {% endif %}
                 </div>
+                {% endif %}
+                {% if trainer.cert8 %}
                 <div>
-                    {% if trainer.cert8 %}
-                    {{ trainer.cert8 }}
+                    {% if trainer.certimg8 %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg8"> {{ trainer.cert8 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg8" tabindex="-1" aria-labelledby="certimg8" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg8.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert8 }}</button>
                     {% endif %}
                 </div>
+                {% endif %}
+                {% if trainer.cert9 %}
                 <div>
-                    {% if trainer.cert9 %}
-                    {{ trainer.cert9 }}
+                    {% if trainer.certimg9 %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg9"> {{ trainer.cert9 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg9" tabindex="-1" aria-labelledby="certimg9" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg9.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert9 }}</button>
                     {% endif %}
                 </div>
+                {% endif %}
+                {% if trainer.cert10 %}
                 <div>
-                    {% if trainer.cert10 %}
-                    {{ trainer.cert10 }}
+                    {% if trainer.certimg10 %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn" data-bs-toggle="modal" data-bs-target="#certimg10"> {{ trainer.cert10 }}</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="certimg10" tabindex="-1" aria-labelledby="certimg10" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <img src="{{ trainer.certimg10.url }}">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <i class="fas fa-stamp" style="vertical-align: middle"></i><button class="btn"> {{ trainer.cert10 }}</button>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
     <div class="target" id="5" role="tabpanel" aria-labelledby="tab5">
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-9">
+                <div>
+                    <h4>이용가격</h4>
+                </div>
+                <div>
+                    뭐는 얼마
+                    뭐는 얼마
+                    뭐는 얼마
+                </div>
+            </div>
+        </div>
     </div>
     <div class="target" id="6" role="tabpanel" aria-labelledby="tab6">
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-9">
+                <div>
+                    <h4>바로가기</h4>
+                </div>
+                {% if trainer.sns1 %}
+                <div>
+                    <i class="fab fa-instagram" style="vertical-align: middle"></i>
+                    <a href="{{ trainer.sns1 }}" target="_blank"><button class="btn">{{ trainer.sns1 }}</button></a>
+                </div>
+                {% endif %}
+                {% if trainer.sns2 %}
+                <div>
+                    <i class="fab fa-facebook-f" style="vertical-align: middle"></i>
+                    <a href="{{ trainer.sns2 }}" target="_blank"><button class="btn">{{ trainer.sns2 }}</button></a>
+                </div>
+                {% endif %}
+                {% if trainer.sns3 %}
+                <div>
+                    <i class="far fa-window-maximize" style="vertical-align: middle"></i>
+                    <a href="{{ trainer.sns3 }}" target="_blank"><button class="btn">{{ trainer.sns3 }}</button></a>
+                </div>
+                {% endif %}
+                {% if trainer.sns4 %}
+                <div>
+                    <i class="far fa-window-maximize" style="vertical-align: middle"></i>
+                    <a href="{{ trainer.sns4 }}" target="_blank"><button class="btn">{{ trainer.sns4 }}</button></a>
+                </div>
+                {% endif %}
+                {% if trainer.sns5 %}
+                <div>
+                    <i class="far fa-window-maximize" style="vertical-align: middle"></i>
+                    <a href="{{ trainer.sns5 }}" target="_blank"><button class="btn">{{ trainer.sns5 }}</button></a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
     <div class="target" id="7" role="tabpanel" aria-labelledby="tab7">
-        <p><strong>지역:</strong>{{ trainer.address }}</p>
-        <p><strong>장소:</strong>{{ trainer.place }}</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
-        <p>o</p>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-9">
+                <div>
+                    <h4>위치</h4>
+                </div>
+                <div>
+                    <p><strong>지역:</strong>{{ trainer.address }}</p>
+                    <p><strong>장소:</strong>{{ trainer.place }}</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                    <p>o</p>
+                </div>
+            </div>
+        </div>
     </div>
-<!--    <div class="target" id="5" role="tabpanel" aria-labelledby="tab6"></div>-->
+<!--    <div class="target" id="8" role="tabpanel" aria-labelledby="tab8"></div>-->
 </div>
 <script>
 $(function() {

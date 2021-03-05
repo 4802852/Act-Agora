@@ -64,56 +64,21 @@ class Trainer(models.Model):
     imagename = models.CharField(max_length=64, null=True, blank=True, verbose_name='이미지파일')
 
     # Certificate
-    cert1 = models.CharField(max_length=40, null=True, blank=True)
-    certimg1 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
-    cert2 = models.CharField(max_length=40, null=True, blank=True)
-    certimg2 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
-    cert3 = models.CharField(max_length=40, null=True, blank=True)
-    certimg3 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
-    cert4 = models.CharField(max_length=40, null=True, blank=True)
-    certimg4 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
-    cert5 = models.CharField(max_length=40, null=True, blank=True)
-    certimg5 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
-    cert6 = models.CharField(max_length=40, null=True, blank=True)
-    certimg6 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
-    cert7 = models.CharField(max_length=40, null=True, blank=True)
-    certimg7 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
-    cert8 = models.CharField(max_length=40, null=True, blank=True)
-    certimg8 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
-    cert9 = models.CharField(max_length=40, null=True, blank=True)
-    certimg9 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
-    cert10 = models.CharField(max_length=40, null=True, blank=True)
-    certimg10 = ProcessedImageField(
-        upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
-        null=True, blank=True, format='JPEG', options={'quality': 90}
-    )
+    cert1, cert2, cert3, cert4, cert5, cert6, cert7, cert8, cert9, cert10 = [
+        models.CharField(max_length=40, null=True, blank=True) for i in range(10)
+    ]
+    certimg1, certimg2, certimg3, certimg4, certimg5, certimg6, certimg7, certimg8, certimg9, certimg10 = [
+        ProcessedImageField(
+            upload_to=get_profile_image_path, processors=[Resize(width=500, height=None, upscale=False)],
+            null=True, blank=True, format='JPEG', options={'quality': 90}
+        ) for i in range(10)
+    ]
+    # cert = [cert1, cert2, cert3, cert4, cert5, cert6, cert7, cert8, cert9, cert10]
+    # certimg = [certimg1, certimg2, certimg3, certimg4, certimg5, certimg6, certimg7, certimg8, certimg9, certimg10]
+
+    sns1, sns2, sns3, sns4, sns5 = [
+        models.CharField(max_length=256, null=True, blank=True) for i in range(5)
+    ]
 
     def hashtag_save(self):
         self.hashtag.set([])

@@ -162,9 +162,9 @@ def trainer_new(request):
         if form.is_valid():
             trainer = form.save(commit=False)
             trainer.writer = user_id
-            if request.FILES:
-                if 'image' in request.FILES.keys():
-                    trainer.imagename = request.FILES['image'].name
+            # if request.FILES:
+            #     if 'image' in request.FILES.keys():
+            #         trainer.imagename = request.FILES['image'].name
             #     if 'upload_files' in request.FILES.keys():
             #         trainer.filename = request.FILES['upload_files'].name
             trainer.save()
@@ -184,17 +184,67 @@ def trainer_update(request, trainer_id):
         if trainer.writer == request.user or request.user.level == '0':
             image_change_check = request.POST.get('imageChange', False)
             image_check = request.POST.get('image-clear', False)
-
             if image_check or image_change_check:
                 os.remove(os.path.join(settings.MEDIA_ROOT, trainer.image.path))
+
+            certimg1_change_check = request.POST.get('certimg1Change', False)
+            certimg1_check = request.POST.get('certimg1-clear', False)
+            if certimg1_check or certimg1_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg1.path))
+
+            certimg2_change_check = request.POST.get('certimg2Change', False)
+            certimg2_check = request.POST.get('certimg2-clear', False)
+            if certimg2_check or certimg2_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg2.path))
+
+            certimg3_change_check = request.POST.get('certimg3Change', False)
+            certimg3_check = request.POST.get('certimg3-clear', False)
+            if certimg3_check or certimg3_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg3.path))
+
+            certimg4_change_check = request.POST.get('certimg4Change', False)
+            certimg4_check = request.POST.get('certimg4-clear', False)
+            if certimg4_check or certimg4_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg4.path))
+
+            certimg5_change_check = request.POST.get('certimg5Change', False)
+            certimg5_check = request.POST.get('certimg5-clear', False)
+            if certimg5_check or certimg5_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg5.path))
+
+            certimg6_change_check = request.POST.get('certimg6Change', False)
+            certimg6_check = request.POST.get('certimg6-clear', False)
+            if certimg6_check or certimg6_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg6.path))
+
+            certimg7_change_check = request.POST.get('certimg7Change', False)
+            certimg7_check = request.POST.get('certimg7-clear', False)
+            if certimg7_check or certimg7_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg7.path))
+
+            certimg8_change_check = request.POST.get('certimg8Change', False)
+            certimg8_check = request.POST.get('certimg8-clear', False)
+            if certimg8_check or certimg8_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg8.path))
+
+            certimg9_change_check = request.POST.get('certimg9Change', False)
+            certimg9_check = request.POST.get('certimg9-clear', False)
+            if certimg9_check or certimg9_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg9.path))
+
+            certimg10_change_check = request.POST.get('certimg10Change', False)
+            certimg10_check = request.POST.get('certimg10-clear', False)
+            if certimg10_check or certimg10_change_check:
+                os.remove(os.path.join(settings.MEDIA_ROOT, trainer.certimg10.path))
+
             form = TrainerNewForm(request.POST, request.FILES, instance=trainer)
             writer = trainer.writer
             if form.is_valid():
                 trainer = form.save(commit=False)
                 trainer.writer = writer
-                if request.FILES:
-                    if 'image' in request.FILES.keys():
-                        trainer.imagename = request.FILES['image'].name
+                # if request.FILES:
+                #     if 'image' in request.FILES.keys():
+                #         trainer.imagename = request.FILES['image'].name
                 #     if 'upload_files' in request.FILES.keys():
                 #         trainer.filename = request.FILES['upload_files'].name
                 trainer.save()
