@@ -13,7 +13,7 @@
 <!--        <a class="nav-link" id="tab8" data-bs-toggle="tab" href="#8" role="tab" aria-controls="tab8" aria-selected="false">위치</a>-->
     </div>
 </nav>
-<div class="tab-content" id="nav-tabContent" style="background-color: white; border-right: 1px solid #E6E6E6; border-left: 1px solid #E6E6E6">
+<div class="tab-content" id="nav-tabContent" style="background-color: white; border-right: 1px solid #E6E6E6; border-left: 1px solid #E6E6E6; border-bottom: 1px solid #E6E6E6; border-radius: 0px 0px 20px 20px">
     <div class="target" id="1" role="tabpanel" aria-labelledby="tab1">
         <div class="row justify-content-center">
             <div class="col-4 col-md-3" align="right">
@@ -124,7 +124,7 @@
     </div>
     <div class="target" id="3" role="tabpanel" aria-labelledby="tab3">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-9">
+            <div class="col-12 col-md-9" style="padding-bottom: 20px">
                 <h4>트레이너 소개</h4>
             </div>
             <div class="col-12 col-md-9">
@@ -135,7 +135,7 @@
     <div class="target" id="4" role="tabpanel" aria-labelledby="tab4">
         <div class="row justify-content-center">
             <div class="col-12 col-md-9">
-                <div>
+                <div style="padding-bottom: 20px">
                     <h4>자격/증명</h4>
                 </div>
                 {% if trainer.cert1 %}
@@ -324,7 +324,7 @@
     <div class="target" id="5" role="tabpanel" aria-labelledby="tab5">
         <div class="row justify-content-center">
             <div class="col-12 col-md-9">
-                <div>
+                <div style="padding-bottom: 20px">
                     <h4>이용가격</h4>
                 </div>
                 <div>
@@ -338,7 +338,7 @@
     <div class="target" id="6" role="tabpanel" aria-labelledby="tab6">
         <div class="row justify-content-center">
             <div class="col-12 col-md-9">
-                <div>
+                <div style="padding-bottom: 20px">
                     <h4>바로가기</h4>
                 </div>
                 {% if trainer.sns1 %}
@@ -377,27 +377,57 @@
     <div class="target" id="7" role="tabpanel" aria-labelledby="tab7">
         <div class="row justify-content-center">
             <div class="col-12 col-md-9">
-                <div>
+                <div style="padding-bottom: 20px">
                     <h4>위치</h4>
                 </div>
                 <div>
+                    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=109fa20c941d5a9d8b043b693a189cc8&libraries=services,clusterer,drawing"></script>
+
                     <p><strong>지역:</strong>{{ trainer.address }}</p>
                     <p><strong>장소:</strong>{{ trainer.place }}</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
-                    <p>o</p>
+
+                    <div id="map" style="width: 100%; height:400px;"></div>
+                    <script>
+                    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+                        mapOption = {
+                            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                            level: 3 // 지도의 확대 레벨
+                        };
+
+                    // 지도를 생성합니다
+                    var map = new kakao.maps.Map(mapContainer, mapOption);
+
+                    // 주소-좌표 변환 객체를 생성합니다
+                    var geocoder = new kakao.maps.services.Geocoder();
+
+                    // 주소로 좌표를 검색합니다
+                    geocoder.addressSearch('{{ trainer.address}}', function(result, status) {
+
+                        // 정상적으로 검색이 완료됐으면
+                         if (status === kakao.maps.services.Status.OK) {
+
+                            var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                            // 결과값으로 받은 위치를 마커로 표시합니다
+                            var marker = new kakao.maps.Marker({
+                                map: map,
+                                position: coords
+                            });
+
+                            // 인포윈도우로 장소에 대한 설명을 표시합니다
+                            var infowindow = new kakao.maps.InfoWindow({
+                                content: '<div style="width:150px;text-align:center;padding:6px 0;">{{ trainer.place }}</div>'
+                            });
+                            infowindow.open(map, marker);
+
+                            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                            map.setCenter(coords);
+                        }
+                    });
+                    </script>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
                 </div>
             </div>
         </div>

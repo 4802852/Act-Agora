@@ -2,38 +2,55 @@
 
 {% block contents %}
 {% if b %}
-<h1>Search List</h1>
+<h1>검색 결과</h1>
 {% else %}
-<h1>Review List</h1>
+<h1>고객 후기</h1>
 {% endif %}
 
-<div class="row">
-    <div class="col-2 col-md-2">트레이너</div>
-    <div class="col-5 col-md-5">제목</div>
-    <div class="col-2 col-md-2">작성자</div>
-    <div class="col-3 col-md-3">작성일</div>
+{% if b %}
+<p></p>
+{% else %}
+<div style="text-align: right">
+    <a href="{% url 'review:review-new' %}"><button class="btn btn-outline-secondary"><i class="fas fa-pencil-alt" style="color: gray"></i> 리뷰쓰기</button></a>
 </div>
-{% if review_list %}
-{% for review in review_list %}
-<a href="{{ review.get_absolute_url }}">
-    <div class="row" style="border: 1px solid black">
-        <div class="col-2 col-md-2">{{ review.trainer.name }}</div>
-        <div class="col-5 col-md-5">{{ review.title }}</div>
-        <div class="col-2 col-md-2">{{ review.writer }}</div>
-        <div class="col-3 col-md-3">{{ review.date }}</div>
-    </div>
-</a>
-{% endfor %}
+{% endif %}
+
+<div class="row justify-content-center" style="margin-top: 15; margin-bottom: 4">
+    <div id="board-top" class="col-2 col-md-2">트레이너</div>
+    <div id="board-top" class="col-5 col-md-5">제목</div>
+    <div id="board-top" class="col-2 col-md-2">작성자</div>
+    <div id="board-top" class="col-2 col-md-2">작성일</div>
+</div>
+
+{% if page_obj %}
+    {% for review in page_obj %}
+    <a href="{{ review.get_absolute_url }}">
+        <div class="row justify-content-center" style="margin-top: 3; margin-bottom: 3; padding: 0">
+            <div id="board-content" class="col-2 col-md-2" style="text-align: center">{{ review.trainer.name }}</div>
+            <div id="board-content" class="col-7 col-md-5">{{ review.title }}</div>
+            <div id="board-content" class="col-3 col-md-2" style="text-align: center">{{ review.writer }}</div>
+            <div id="board-content" class="col-2 col-md-2" style="text-align: center">{{ review.date|date:"n월j일" }}</div>
+        </div>
+    </a>
+    {% endfor %}
 {% else %}
     {% if b %}
-    <p>검색 결과가 없습니다.</p>
+    <div class="row">
+        <div class="col-12" style="text-align: center; margin-top: 50">
+            <p>검색 결과가 없습니다.</p>
+        </div>
+    </div>
     {% else %}
-    <p>현재 등록된 후가 없습니다.</p>
+    <div class="row">
+        <div class="col-12" style="text-align: center; margin-top: 50">
+            <p>아직 등록된 리뷰가 없습니다. 리뷰를 등록해보세요!</p>
+        </div>
+    </div>
     {% endif %}
 {% endif %}
 
 {% if is_paginated %}
-<ul class="pagination">
+<ul class="pagination justify-content-center" style="margin-top: 15px">
     {% if page_obj.has_previous %}
     <li class="page-item">
         <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
@@ -64,10 +81,5 @@
 </ul>
 {% endif %}
 
-{% if b %}
-<p></p>
-{% else %}
-<a href="{% url 'review:review-new' %}">등록하기</a>
-{% endif %}
 
 {% endblock %}
