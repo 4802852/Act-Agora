@@ -10,7 +10,7 @@ from accounts.models import User
 from PTin import settings
 
 from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill, Resize, SmartResize
+from imagekit.processors import ResizeToFill, Resize
 
 
 class Genre(models.Model):

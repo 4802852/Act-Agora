@@ -1,13 +1,17 @@
+import os
+
 from django.contrib import messages
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
-from .forms import ReviewNewForm
-from .models import Review
+from .forms import ReviewNewForm, ImageUploadForm
+from .models import Review, Photo
 from accounts.decorators import login_message_required
 
 from accounts.models import User
 from trainer.models import Trainer
+
+from PTin import settings
 
 
 class ReviewListView(generic.ListView):
@@ -61,6 +65,7 @@ def review_detail_view(request, pk):
 def review_new(request):
     if request.method == "POST":
         form = ReviewNewForm(request.POST)
+        imgform = ImageUploadForm(request.POST, request.FILES)
         user = request.session['user_id']
         trainer = request.session['trainer_id']
         user_id = User.objects.get(user_id=user)
@@ -69,7 +74,7 @@ def review_new(request):
         else:
             trainer = Trainer.objects.get(writer_id=trainer)
 
-        if form.is_valid():
+        if form.is_valid() and imgform.is_valid():
             review = form.save(commit=False)
             review.writer = user_id
             if trainer is None:
@@ -77,12 +82,18 @@ def review_new(request):
             else:
                 review.trainer = trainer
             review.save()
+            for img in request.FILES.getlist("image"):
+                photo = Photo()
+                photo.review = review
+                photo.image = img
+                photo.save()
             review.hashtag_save()
             review.genre_save()
             return redirect('review:review-detail', review.id)
     else:
         form = ReviewNewForm()
-    return render(request, 'review/review_new.html', {'form': form})
+        imgform = ImageUploadForm()
+    return render(request, 'review/review_new.html', {'form': form, 'imgform': imgform})
 
 
 @login_message_required
@@ -91,14 +102,25 @@ def review_update(request, review_id):
 
     if request.method == "POST":
         if review.writer == request.user or request.user.level == '0':
+            # reviewimg_change_check = request.POST.get('certimg1Change', False)
+            # reviewimg_check = request.POST.get('certimg1-clear', False)
+            # if reviewimg_check or reviewimg_change_check:
+            #     os.remove(os.path.join(settings.MEDIA_ROOT, review.photo_set.all().path))
             form = ReviewNewForm(request.POST, instance=review)
+            imgform = ImageUploadForm(request.POST, request.FILES)
+
             writer = review.writer
             trainer = review.trainer
-            if form.is_valid():
+            if form.is_valid() and imgform.is_valid():
                 review = form.save(commit=False)
                 review.writer = writer
                 review.trainer = trainer
                 review.save()
+                for img in request.FILES.getlist("image"):
+                    photo = Photo()
+                    photo.review = review
+                    photo.image = img
+                    photo.save()
                 review.hashtag_save()
                 review.genre_save()
                 messages.success(request, "수정되었습니다.")
@@ -110,6 +132,7 @@ def review_update(request, review_id):
             context = {
                 'form': form,
                 'update': '수정하기',
+                'imgform': review.Photo_set.all()
             }
             return render(request, "review/review_new.html", context)
         else:

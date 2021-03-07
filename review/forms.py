@@ -1,5 +1,5 @@
 from django import forms
-from .models import Review
+from .models import Review, Photo
 
 
 class ReviewNewForm(forms.ModelForm):
@@ -25,3 +25,12 @@ class ReviewNewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['writer', 'trainer', 'title', 'genretext', 'tagtext', 'content']
+
+
+class ImageUploadForm(forms.ModelForm):
+    class Meta:
+        model = Photo
+        fields = ['image']
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'multiple': True}),
+        }

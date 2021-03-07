@@ -13,6 +13,7 @@
     <p><strong>제목: </strong>{{ form.title }}</p>
     <p><strong>분야: </strong>{{ form.genretext }}</p>
     <p><strong>Hashtag: </strong>{{ form.tagtext }}</p>
+    <p><strong>사진: </strong>{{ imgform.image }}</p>
     <p><strong>내용:</strong></p>
     <textarea id="summernote" name="content">{% if update %}{{ form.content.value | safe }}{% endif %}</textarea>
     {% if update %}
