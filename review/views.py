@@ -99,13 +99,15 @@ def review_new(request):
 @login_message_required
 def review_update(request, review_id):
     review = Review.objects.get(id=review_id)
-
+    # image = Photo.objects.get(review=review)
     if request.method == "POST":
         if review.writer == request.user or request.user.level == '0':
-            # reviewimg_change_check = request.POST.get('certimg1Change', False)
-            # reviewimg_check = request.POST.get('certimg1-clear', False)
-            # if reviewimg_check or reviewimg_change_check:
-            #     os.remove(os.path.join(settings.MEDIA_ROOT, review.photo_set.all().path))
+            reviewimg_change_check = request.POST.get('reviewimgChange', False)
+            reviewimg_check = request.POST.get('reviewimg-clear', False)
+            if reviewimg_check or reviewimg_change_check:
+                for image in review.photo_set.all():
+                    os.remove(os.path.join(settings.MEDIA_ROOT, image.image.path))
+                    image.delete()
             form = ReviewNewForm(request.POST, instance=review)
             imgform = ImageUploadForm(request.POST, request.FILES)
 
@@ -127,12 +129,15 @@ def review_update(request, review_id):
                 return redirect('review:review-detail', review.id)
     else:
         review = Review.objects.get(id=review_id)
+        # image = Photo.objects.get(review=review)
+
         if review.writer == request.user or request.user.level == '0':
             form = ReviewNewForm(instance=review)
+            imgform = ImageUploadForm()
             context = {
                 'form': form,
                 'update': '수정하기',
-                'imgform': review.Photo_set.all()
+                'imgform': imgform
             }
             return render(request, "review/review_new.html", context)
         else:

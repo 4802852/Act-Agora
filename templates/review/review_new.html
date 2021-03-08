@@ -14,6 +14,7 @@
     <p><strong>분야: </strong>{{ form.genretext }}</p>
     <p><strong>Hashtag: </strong>{{ form.tagtext }}</p>
     <p><strong>사진: </strong>{{ imgform.image }}</p>
+    <input type="checkbox" id="reviewimgChangeCheck" name="reviewimgChange" style="display: none;">
     <p><strong>내용:</strong></p>
     <textarea id="summernote" name="content">{% if update %}{{ form.content.value | safe }}{% endif %}</textarea>
     {% if update %}
@@ -51,6 +52,19 @@ $(document).ready(function() {
     $("#write").on("click", function () {
         checkUnload = false;
         $("submit").submit();
+    });
+</script>
+<script type = "text/javascript">
+    $("#id_image").change(function() {
+        if ($('#id_image').get(0).files.length >= 1) {
+            $('#reviewimg-clear_id').attr("checked", false)
+        }
+    });
+
+    $('#write').click( function() {
+        if($('#id_image').get(0).files.length >= 1){
+            $('#reviewimgChangeCheck').attr("checked",true)
+        }
     });
 </script>
 {% endblock %}

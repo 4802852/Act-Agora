@@ -6,6 +6,9 @@
 <p><strong>트레이너:</strong>{{ review.trainer.name }} ({{ review.trainer.writer }})</p>
 <p><strong>분야: </strong>{% for genre in review.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 <p><strong>특징:</strong>{% for tag in review.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+{% for photo in review.photo_set.all %}
+<img src="{{ photo.image.url }}" width="100">
+{% endfor %}
 <p><strong>내용: </strong></p>
 <p>{{ review.content | safe}}</p>
 
