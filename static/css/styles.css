@@ -28,11 +28,11 @@ body {
     background-color: #BDBDBD;
 }
 
-div#top-menu-bg {
+#top-menu-bg {
     background-color: #819FF7;
 }
 
-div#top-menu-btn {
+.top-menu-btn {
     background-color: #CED8F6;
      border-radius: 14px;
       border:5px solid #819FF7;
@@ -62,15 +62,16 @@ input {
     vertical-align: middle;
 }
 
-#board-top {
+.board-top {
     text-align: center;
     border-top: 1px solid #A4A4A4;
     border-bottom: 1px solid #A4A4A4;
     background-color: #CEE3F6;
 }
 
-#board-content {
+.board-content {
     border-bottom: 1px solid #E6E6E6;
+    background-color: white;
 }
 
 .target {

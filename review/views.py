@@ -151,7 +151,7 @@ def review_delete(request, review_id):
     if review.writer == request.user or request.user.level =='0':
         review.delete()
         messages.success(request, "삭제되었습니다.")
-        return redirect('review:review-list')
+        return redirect('review:reviews')
     else:
         messages.error(request, "본인 게시글만 삭제할 수 있습니다.")
     return redirect('review-detail', review.id)

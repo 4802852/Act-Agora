@@ -1,17 +1,65 @@
 {% extends 'base.html' %}
 
 {% block contents %}
-<h1>{{ review.title }}</h1>
-<p><strong>작성자:</strong>{{ review.writer }}</p>
-<p><strong>트레이너:</strong>{{ review.trainer.name }} ({{ review.trainer.writer }})</p>
-<p><strong>분야: </strong>{% for genre in review.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-<p><strong>특징:</strong>{% for tag in review.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-{% for photo in review.photo_set.all %}
-<img src="{{ photo.image.url }}" width="100">
-{% endfor %}
-<p><strong>내용: </strong></p>
-<p>{{ review.content | safe}}</p>
+<h1>고객 후기</h1>
+<div class="row justify-content-center" style="background-color: white; border-radius: 20px; border: 1px solid #E6E6E6">
+    <div class="col-12 col-md-10">
+        <p>&nbsp;</p>
+        <p style="font-size: 25">
+            <span style="text-decoration: underline">
+            {% if review.trainer %}
+            {{ review.trainer.name }} ({{ review.trainer.writer }}) 트레이너
+            {% else %}
+            사이트 공통
+            {% endif %}
+            </span>
+            <small>에 대한 리뷰입니다.</small>
+        </p>
+        <p><strong>작성자: </strong>{{ review.writer }}</p>
+        <p><strong>분야: </strong>{% for genre in review.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+        <p><strong>특징: </strong>{% for tag in review.hashtag.all %}#{{ tag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+        {% for photo in review.photo_set.all %}
+        <img src="{{ photo.image.url }}" width="100">
+        {% endfor %}
+        <h5 style="margin-top: 15px">{{ review.title }}</h5>
+        <p>{{ review.content | safe}}</p>
+        <p>&nbsp;</p>
+        {% if review_auth or request.user.level == '0' %}
+        <a href="{% url 'review:review-update' review.id %}"><button class="btn btn-outline-secondary"><i class="fas fa-pencil-alt" style="color: gray"></i> 수정하기</button></a>
+<!--        <a href="{% url 'review:review-delete' review.id %}"><button class="btn btn-secondary"><i class="far fa-trash-alt" style="color: gray"></i> 삭제하기</button></a>-->
+        <button class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#delete_modal"><i class="far fa-trash-alt" style="color: gray"></i> 삭제하기</button>
+        <!-- Modal -->
+        <div id="delete_modal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">삭제경고</h5>
+<!--                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">-->
+<!--                            <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
+                    </div>
+                    <div class="modal-body">
+                        <p>게시글을 삭제하시겠습니까?</p>
+                        <p>삭제 후에는 자료를 복구할 수 없습니다.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="delete_modal()" type="button" class="btn btn-dark">삭제하기</button>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">취소하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <p>&nbsp;</p>
 
-<p><a href="{% url 'review:review-update' review.id %}">modify</a></p>
-<p><a href="{% url 'review:review-delete' review.id %}">delete</a></p>
+
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function delete_modal() {
+        location.replace('/review/{{ review.id }}/delete');
+    }
+</script>
 {% endblock %}

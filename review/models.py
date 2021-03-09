@@ -66,7 +66,7 @@ class Review(models.Model):
 class Photo(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE, null=True)
     image = ProcessedImageField(
-        upload_to=get_review_image_path, processors=[ResizeToFill(width=500, height=500, upscale=False)],
+        upload_to=get_review_image_path, processors=[ResizeToFill(width=640, height=720, upscale=False)],
         null=True, blank=True, format='JPEG', options={'quality': 90},
     )
 
