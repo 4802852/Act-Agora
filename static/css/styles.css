@@ -26,6 +26,8 @@
 body {
     font-family: NotoSansKR;
     background-color: #BDBDBD;
+    margin: 0;
+    padding: 0;
 }
 
 #top-menu-bg {

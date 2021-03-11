@@ -25,11 +25,11 @@
 {% if page_obj %}
     {% for review in page_obj %}
     <a href="{{ review.get_absolute_url }}">
-        <div class="row justify-content-center" style="padding-top: 0; height: 40">
-            <div class="col-3 col-md-2 board-content" style="text-align: center; padding-top: 7">{% if review.trainer %}{{ review.trainer.name }}{% else %}공통{% endif %}</div>
-            <div class="col-6 col-md-5 board-content" style="padding-top: 7">{{ review.title }}</div>
-            <div class="col-3 col-md-2 board-content" style="text-align: center; padding-top: 7">{{ review.writer }}</div>
-            <div class="d-none d-md-block col-md-2 board-content" style="text-align: center; padding-top: 7">{{ review.date|date:"n월j일" }}</div>
+        <div class="row justify-content-center">
+            <div class="col-3 col-md-2 board-content" style="text-align: center">{% if review.trainer %}{{ review.trainer.name }}{% else %}공통{% endif %}</div>
+            <div class="col-6 col-md-5 board-content" style="">{{ review.title }}</div>
+            <div class="col-3 col-md-2 board-content" style="text-align: center">{{ review.writer }}</div>
+            <div class="d-none d-md-block col-md-2 board-content" style="text-align: center">{{ review.date|date:"n월j일" }}</div>
         </div>
     </a>
     {% endfor %}

@@ -15,13 +15,13 @@
         <div class="row">
             {% for trainer in trainer_list %}
                 <div class="col-6 col-md-4">
-                    <div class="card">
+                    <div class="card" style="margin-bottom: 10">
                         <a href="{{ trainer.get_absolute_url }}">
                             <div class="row my-3 justify-content-center" style="text-align: center">
                                 {% if trainer.image %}
-                                <img style="width: 70%; margin-bottom: 15px; border-radius: 20px; padding: 0px" src="{{ trainer.image.url }}">
+                                <img style="width: 70%; margin-bottom: 15px; border-radius: 20px" src="{{ trainer.image.url }}">
                                 {% else %}
-                                <img style="width: 70%; margin-bottom: 15px; border-radius: 20px; padding: 0px" src="/static/img/profile.png">
+                                <img style="width: 70%; margin-bottom: 15px; border-radius: 20px" src="/static/img/profile.png">
                                 {% endif %}
                                 <p style="font-size: 20px">{{ trainer.name }}<small>({% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %})</small></p>
                                 <p style="font-size: 15px; margin-bottom: 1">{{ trainer.place }}</p>

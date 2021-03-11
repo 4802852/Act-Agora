@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
 {% block contents %}
-
+<p>&nbsp;</p>
+<div align="center">
+<div class="card" align="left" style="width: 80%; padding: 40px; border-radius: 5px">
 <form method="post" action="" novalidate>
     {% csrf_token %}
-    <div>
-        <label name="label_user_id" for="{{ form.user_id.id_for_label }}">
+    <div style="margin-bottom: 10px">
+        <label style="margin-bottom: 10px" name="label_user_id" for="{{ form.user_id.id_for_label }}">
             {{ form.user_id.label }}
         </label>
         {{ form.user_id }}
@@ -25,8 +27,8 @@
         {% endfor %}
         {% endif %}
     </div>
-    <div>
-        <label name="label_password" for="{{ form.password.id_for_label }}">
+    <div style="margin-bottom: 10px">
+        <label style="margin-bottom: 10px" name="label_password" for="{{ form.password.id_for_label }}">
             {{ form.password.label }}
         </label>
         {{ form.password }}
@@ -41,13 +43,22 @@
         {% endfor %}
         {% endif %}
     </div>
-    <label>
-        <input type="checkbox" name="remember_session"/>
-        <span>로그인 상태 유지</span>
-    </label>
-    <input type="submit" value="로그인">
+    <div class="row">
+        <div class="col-8">
+            <label>
+                <input type="checkbox" name="remember_session"/>
+                <span>로그인 상태 유지</span>
+            </label>
+        </div>
+        <div class="col-4" align="right">
+            <input type="submit" class="btn btn-outline-secondary" value="로그인">
+        </div>
+    </div>
 </form>
-<p><a href="{% url 'accounts:recovery_id' %}">find id</a></p>
-<p><a href="{% url 'accounts:recovery_pw' %}">find pw</a></p>
-
+<div align="center">
+<a href="{% url 'accounts:recovery_id' %}"><button class="btn btn-outline-secondary">아이디찾기</button></a>
+<a href="{% url 'accounts:recovery_pw' %}"><button class="btn btn-outline-secondary">비밀번호찾기</button></a>
+</div>
+</div>
+</div>
 {% endblock %}
