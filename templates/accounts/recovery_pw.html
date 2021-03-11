@@ -1,9 +1,6 @@
-{% extends 'base.html' %}
+{% extends "accounts/register_template.html" %}
 
-{% block contents %}
-<p>&nbsp;</p>
-<div align="center">
-<div class="card" align="left" style="width: 80%; padding: 40px; border-radius: 5px">
+{% block contents2 %}
 <div>
     {% csrf_token %}
     <div style="margin-bottom: 10px">
@@ -28,8 +25,6 @@
 
     <div id="result_pw"></div>
     </div>
-</div>
-</div>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {

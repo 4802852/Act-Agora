@@ -1,32 +1,52 @@
-{% extends 'accounts/mypage_nav.html' %}
+{% extends "accounts/mypage_nav.html" %}
 
 {% block contents2 %}
-<h1>My Profile</h1>
+<center>
+    {% if b %}
+    <h1>검색 결과</h1>
+    {% else %}
+    <h1>트레이너 찾기</h1>
+    {% endif %}
+</center>
 
-{% if trainer_list %}
-{% for trainer in trainer_list %}
-<a href="{{ trainer.get_absolute_url }}">
-    <div class="row" style="border: 1px solid black">
-        <div class="col-3 col-md-2" align="center" style="background-color:yellow"><img class="img-fluid" src="{{ trainer.image.url }}"></div>
-        <div class="col-9 col-md-10">
-            <div class="row">
-                <div class="col-12 col-md-6" align="left">이름 : {{ trainer.name }}</div>
-                <div class="col-12 col-md-6" align="left">분야 : {% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-                <div class="col-12 col-md-6" align="left">지역 : {{ trainer.address }}</div>
-                <div class="col-12 col-md-6" align="left">장소 : {{ trainer.place }}</div>
-                <div class="col-12 col-md-12" align="left">특징 : {% for hashtag in trainer.hashtag.all %}#{{ hashtag }}{% if not forloop.last %}, {% endif %}{% endfor %}</div>
-            </div>
+<div class="row justify-content-center">
+    {% if trainer_list %}
+    <div class="col-11">
+        <div class="row">
+            {% for trainer in trainer_list %}
+                <div class="col-6 col-md-4">
+                    <div class="card" style="margin-bottom: 10">
+                        <a href="{{ trainer.get_absolute_url }}">
+                            <div class="row my-3 justify-content-center" style="text-align: center">
+                                {% if trainer.image %}
+                                <img style="width: 70%; margin-bottom: 15px; border-radius: 20px" src="{{ trainer.image.url }}">
+                                {% else %}
+                                <img style="width: 70%; margin-bottom: 15px; border-radius: 20px" src="/static/img/profile.png">
+                                {% endif %}
+                                <p style="font-size: 20px">{{ trainer.name }}<small>({% for genre in trainer.genre.all %}{{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %})</small></p>
+                                <p style="font-size: 15px; margin-bottom: 1">{{ trainer.place }}</p>
+                                <p style="font-size: 10px">( {{ trainer.address }} )</p>
+                                <p style="font-size: 8px">{% for hashtag in trainer.hashtag.all %}#{{ hashtag }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
-</a>
-{% endfor %}
 
-{% else %}
-<p>트레이너 정보를 등록해주세요.</p>
-{% endif %}
+    {% else %}
+        {% if b %}
+        <p>검색 결과가 없습니다.</p>
+        {% else %}
+        <p>현재 등록된 트레이너가 없습니다.</p>
+        {% endif %}
+    {% endif %}
+</div>
+
 
 {% if is_paginated %}
-<ul class="pagination">
+<ul class="pagination justify-content-center" style="margin-top: 7px">
     {% if page_obj.has_previous %}
     <li class="page-item">
         <a class="page-link" href="?page={{ page_obj.previous_page_number }}"
@@ -56,4 +76,8 @@
     {% endif %}
 </ul>
 {% endif %}
+
+
+
+<br><br><br>
 {% endblock %}

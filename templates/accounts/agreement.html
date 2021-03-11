@@ -1,6 +1,8 @@
-{% extends "base.html" %}
-{% block contents %}
-<p>약관1 블라블라블라</p>
+{% extends "accounts/register_template.html" %}
+
+{% block contents2 %}
+<h3>약관1</h3>
+<p>어쩌구저쩌구</p>
 <form action="" method="POST">
     {% csrf_token %}
     <div>
@@ -9,14 +11,19 @@
             <span>이용약관에 동의합니다.</span>
         </label>
     </div>
-    <p>약관2 블라블라블라</p>
+    <p>&nbsp;</p>
+    <h3>약관2</h3>
+    <p>블라블라블라</p>
     <div>
         <label>
             <input type="checkbox" name="agreement2" />
             <span>개인정보 수집 및 이용에 동의합니다.</span>
          </label>
     </div>
-    <button type="submit" name="signup_t" class="btn btn-primary" value="signup_t">Trainer</button>
-    <button type="submit" name="signup" class="btn btn-primary" value="signup">Trainee</button>
+    <p>&nbsp;</p>
+    <div align="center">
+        <button type="submit" name="signup_t" class="btn btn-primary" value="signup_t">Trainer</button>
+        <button type="submit" name="signup" class="btn btn-primary" value="signup">Trainee</button>
+    </div>
 </form>
 {% endblock %}

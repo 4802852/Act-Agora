@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "accounts/register_template.html" %}
 
-{% block contents %}
+{% block contents2 %}
 <form method="POST" action="" novalidate>
     {% csrf_token %}
     <div>
@@ -122,7 +122,7 @@
         </div>
         {% endfor %}
         {% endif %}
-        <small class="form-text text-muted">
+        <small>
             아이디, 비밀번호 찾기에 사용됩니다.
         </small>
     </div>
@@ -151,6 +151,8 @@
             하이픈(-)을 제외한 숫자로 입력해주세요.
         </small>
     </div>
-    <input type="submit" value="회원가입">
+    <div align="center">
+        <input class="btn btn-outline-secondary" type="submit" value="회원가입">
+    </div>
 </form>
 {% endblock %}

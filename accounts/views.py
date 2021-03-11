@@ -120,7 +120,8 @@ class RecoveryIdView(View):
 
     def get(self, request):
         if request.method == 'GET':
-            form = self.recovery_id(None)
+            # form = self.recovery_id(None)
+            form = RecoveryIdForm
             return render(request, self.template_name, {'form': form})
 
 

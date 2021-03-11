@@ -155,7 +155,7 @@ AUTH_USER_MODEL = "accounts.User"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
-# Email 설
+# Email 설정
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.naver.com'
 EMAIL_HOST_USER = '4802852c'
