@@ -7,7 +7,7 @@
 
 {% block contents %}
 <div class="row">
-    <div class="col-4 col-md-3">
+    <div class="col-4 col-md-3" style="padding-left: 20px">
         <p>&nbsp;</p>
         <p><a href="{% url 'accounts:profile' %}">회원정보</a></p>
         <p><a href="{% url 'accounts:password_change' %}">비밀번호 변경</a></p>
@@ -17,8 +17,12 @@
         {% endif %}
         <p><a href="{% url 'accounts:profile_delete' %}">회원 탈퇴</a></p>
     </div>
-    <div class="col-8 col-md-9">
-        {% block contents2 %}{% endblock %}
+    <div class="col-8 col-md-9" style="padding: 40 60 0 10">
+        <div class="row">
+            <div class="register_template col-12 col-md-11" style="padding: 40; border-radius: 5px; background-color: #F8F8F8;">
+                {% block contents2 %}{% endblock %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

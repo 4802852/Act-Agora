@@ -1,6 +1,7 @@
 {% extends 'accounts/mypage_nav.html' %}
 
 {% block contents2 %}
+
 <table>
     <tr>
         <td>아이디</td>
@@ -13,15 +14,23 @@
         {% endif %}
     </tr>
     <tr>
-        <td>이메일</td>
+        <td style="width: 130">이메일</td>
         <td>{{ user.email }}</td>
     </tr>
     <tr>
-        <td>hp</td>
-        <td>{{ user.hp }}</td>
+        <td>이름</td>
+        <td>{{ user.name }}</td>
     </tr>
     <tr>
-        <td><a href="{% url 'accounts:profile_update' %}">회원정보 수정</a></td>
+        <td>hp</td>
+        <td>0{{ user.hp }}</td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><a href="{% url 'accounts:profile_update' %}"><button class="btn btn-outline-secondary">회원정보 수정</button></a></td>
     </tr>
 </table>
 {% endblock %}
