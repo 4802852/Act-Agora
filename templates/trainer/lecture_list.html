@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block contents %}
+<div align="center" style="padding: 30px">
 <h1>Classes List</h1>
 {% if lecture_list %}
 <ul>
@@ -13,4 +14,5 @@
 {% else %}
 <p>There are no classes in PTin.</p>
 {% endif %}
+</div>
 {% endblock %}

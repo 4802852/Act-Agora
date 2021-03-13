@@ -11,6 +11,10 @@ urlpatterns = [
     path('lecture/<int:pk>', views.LectureDetailView.as_view(), name='lecture-detail'),
 ]
 
+urlpatterns += [
+    path('aboutus/', views.aboutus, name='aboutus'),
+]
+
 # my class
 urlpatterns += [
     path('traineelectures/', views.LecturesByUserListView.as_view(), name='trainee-lectures'),

@@ -1,15 +1,27 @@
 {% extends 'base.html' %}
 
-{% block header %}
-<title>Welcome to Act:Agora</title>
-{% endblock %}
-
 {% block contents %}
 <div align="center">
-<h1>Welcome to PTin!</h1>
-<p>Welcome to PTin, a website for matching the trainees to the trainers</p>
-<h2>Dynamic content</h2>
-<p>{{ num_trainers }} trainers have {{ num_instances }} classes in PTin.</p>
-<p>But there are only {{ num_instances_available }} classes left.</p>
+    <h1 class="text-muted">혼자하니</h1>
+    <h1 class="text-muted">지루하고</h1>
+    <h1 class="text-muted">어려운</h1>
+    <h1 class="text-muted">운동</h1>
+    <h1 class="text-muted">...</h1>
+    <h1 class="text-muted">이제는</h1>
+    <h1><strong>제대로된 트레이너에게</strong></h1>
+    <h1><strong>제대로 배우자!</strong></h1>
+    <p>&nbsp;</p>
+    <h5 class="text-muted">ACT:AGORA는<br>당신의 건강하고 재미있는<br>운동라이프를 응원합니다.</h5>
+    <p>&nbsp;</p>
+    <h7 class="text-muted">
+        ACT:AGORA에는 현재 {{ num_trainers }}명의 트레이너들이 활동중입니다.
+    </h7>
+
+
+<!--<h1>Welcome to PTin!</h1>-->
+<!--<p>Welcome to PTin, a website for matching the trainees to the trainers</p>-->
+<!--<h2>Dynamic content</h2>-->
+<!--<p>{{ num_trainers }} trainers have {{ num_instances }} classes in PTin.</p>-->
+<!--<p>But there are only {{ num_instances_available }} classes left.</p>-->
 </div>
 {% endblock %}

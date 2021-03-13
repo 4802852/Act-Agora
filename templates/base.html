@@ -10,7 +10,8 @@
         <script src="{% static 'js/bootstrap.js' %}"></script>
         <script src="https://kit.fontawesome.com/c5df104f7a.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?ver=14" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?ver=15" />
+        <title>Act:Agora</title>
         {% block header %}{% endblock %}
     </head>
 
@@ -44,7 +45,7 @@
         <div id="top-menu-bg" class="container-fluid">
             <div class="container">
                 <div class="row">
-                    <div class="top-menu-btn col-sm-3 col-3" align="center"><a href="{% url 'index' %}"><button class="btn btn-sm">About Us</button></a></div>
+                    <div class="top-menu-btn col-sm-3 col-3" align="center"><a href="{% url 'aboutus' %}"><button class="btn btn-sm">About Us</button></a></div>
                     <div class="top-menu-btn col-sm-3 col-3" align="center"><a href="{% url 'trainers' %}"><button class="btn btn-sm">트레이너 정보</button></a></div>
                     <div class="top-menu-btn col-sm-3 col-3" align="center"><a href="{% url 'lectures' %}"><button class="btn btn-sm">레슨 신청</button></a></div>
                     <div class="top-menu-btn col-sm-3 col-3" align="center"><a href="{% url 'review:reviews' %}"><button class="btn btn-sm">고객 후기</button></a></div>
@@ -52,7 +53,7 @@
             </div>
         </div>
         <div class="container-fluid" style="background-color: #F8F8F8">
-            <div class="container">
+            <div class="container" style="background-color: white">
                 <div class="row">
                     <div class="col-sm-12 col-12">
                         {% block contents %}{% endblock %}

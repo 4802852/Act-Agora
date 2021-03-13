@@ -32,6 +32,10 @@ def index(request):
     return render(request, 'index.html', context=context)
 
 
+def aboutus(request):
+    return render(request, 'aboutus.html', {})
+
+
 class TrainerListView(generic.ListView):
     model = Trainer
     paginate_by = 10
