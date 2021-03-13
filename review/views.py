@@ -1,6 +1,7 @@
 import os
 
 from django.contrib import messages
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 
@@ -68,11 +69,12 @@ def review_new(request):
         imgform = ImageUploadForm(request.POST, request.FILES)
         user = request.session['user_id']
         trainer = request.session['trainer_id']
+        trainer_name = request.session['trainer_name']
         user_id = User.objects.get(user_id=user)
         if trainer is None:
             pass
         else:
-            trainer = Trainer.objects.get(writer_id=trainer)
+            trainer = Trainer.objects.filter(writer_id=trainer, name=trainer_name).first()
 
         if form.is_valid() and imgform.is_valid():
             review = form.save(commit=False)

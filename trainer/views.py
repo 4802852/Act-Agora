@@ -69,6 +69,7 @@ class TrainerListView(generic.ListView):
 def trainer_detail_view(request, pk):
     trainer = get_object_or_404(Trainer, pk=pk)
     request.session['trainer_id'] = trainer.writer_id
+    request.session['trainer_name'] = trainer.name
 
     # 접속자가 작성자와 일치하는지 확인
     if request.user == trainer.writer:

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block contents %}
-<nav id="nav" style="position: sticky; top: 0; padding-top: 10; background-color: #F8F8F8">
+<nav id="nav" class="sticky-top" style="padding-top: 10; background-color: #F8F8F8">
     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-        <a class="nav-link active" id="tab1" data-bs-toggle="tab" href="#1" role="tab" aria-controls="tab1" aria-selected="true">About</a>
-        <a class="nav-link" id="tab2" data-bs-toggle="tab" href="#2" role="tab" aria-controls="tab2" aria-selected="false">후기</a>
-        <a class="nav-link" id="tab3" data-bs-toggle="tab" href="#3" role="tab" aria-controls="tab3" aria-selected="false">소개</a>
-        <a class="nav-link" id="tab4" data-bs-toggle="tab" href="#4" role="tab" aria-controls="tab4" aria-selected="false">자격/경력</a>
-        <a class="nav-link" id="tab5" data-bs-toggle="tab" href="#5" role="tab" aria-controls="tab5" aria-selected="false">이용가격</a>
-        <a class="nav-link" id="tab6" data-bs-toggle="tab" href="#6" role="tab" aria-controls="tab6" aria-selected="false">바로가기</a>
-        <a class="nav-link" id="tab7" data-bs-toggle="tab" href="#7" role="tab" aria-controls="tab7" aria-selected="false">위치</a>
+        <a class="nav-link active" id="tab1" href="#1" role="tab" aria-controls="tab1" aria-selected="true">About</a>
+        <a class="nav-link" id="tab2" href="#2" role="tab" aria-controls="tab2" aria-selected="false">후기</a>
+        <a class="nav-link" id="tab3" href="#3" role="tab" aria-controls="tab3" aria-selected="false">소개</a>
+        <a class="nav-link" id="tab4" href="#4" role="tab" aria-controls="tab4" aria-selected="false">자격/경력</a>
+        <a class="nav-link" id="tab5" href="#5" role="tab" aria-controls="tab5" aria-selected="false">이용가격</a>
+        <a class="nav-link" id="tab6" href="#6" role="tab" aria-controls="tab6" aria-selected="false">바로가기</a>
+        <a class="nav-link" id="tab7" href="#7" role="tab" aria-controls="tab7" aria-selected="false">위치</a>
 <!--        <a class="nav-link" id="tab8" data-bs-toggle="tab" href="#8" role="tab" aria-controls="tab8" aria-selected="false">위치</a>-->
     </div>
 </nav>
@@ -443,7 +443,7 @@ $(function() {
 
     $(window).on('scroll', function() {
         $('.target').each(function() {
-            if($(window).scrollTop() >= ($(this).offset().top - 250)) {
+            if($(window).scrollTop() >= ($(this).offset().top - 100)) {
                 var id = $(this).attr('id');
                 $('#nav div a').removeClass('active');
                 $('#nav div a[href$="#'+ id + '"]').addClass('active');

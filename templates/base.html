@@ -10,7 +10,7 @@
         <script src="{% static 'js/bootstrap.js' %}"></script>
         <script src="https://kit.fontawesome.com/c5df104f7a.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?ver=15" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}?ver=17" />
         <title>Act:Agora</title>
         {% block header %}{% endblock %}
     </head>
@@ -53,7 +53,7 @@
             </div>
         </div>
         <div class="container-fluid" style="background-color: #F8F8F8">
-            <div class="container" style="background-color: white">
+            <div class="container" style="background-color: white; padding: 0px">
                 <div class="row">
                     <div class="col-sm-12 col-12">
                         {% block contents %}{% endblock %}
@@ -92,5 +92,6 @@
                 </div>
             </div>
         </div>
+    <a style="display:scroll;position:fixed;bottom:10px;right:50%;" href="#" title=”top"><button class="btn btn-sm btn-outline-secondary"><i class="fas fa-caret-up" style="margin: 0; padding: 0"></i><br><span style="margin: 0; padding: 0">TOP</span></button></a>
     </body>
 </html>

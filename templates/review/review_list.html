@@ -4,13 +4,13 @@
 {% if b %}
 <h1>검색 결과</h1>
 {% else %}
-<h1>고객 후기</h1>
+<h1 align="center">고객 후기</h1>
 {% endif %}
 
 {% if b %}
 <p></p>
 {% else %}
-<div style="text-align: right">
+<div style="text-align: right; padding-right: 35px">
     <a href="{% url 'review:review-new' %}"><button class="btn btn-outline-secondary"><i class="fas fa-pencil-alt" style="color: gray"></i> 리뷰쓰기</button></a>
 </div>
 {% endif %}
