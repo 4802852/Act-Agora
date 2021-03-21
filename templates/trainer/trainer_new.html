@@ -1,71 +1,269 @@
-{% extends 'accounts/mypage_nav.html' %}
+{% extends 'base.html' %}
 
-{% block header2 %}
+{% block header %}
 {% load static %}
 <link href="{% static 'css/summernote-lite.css' %}" rel="stylesheet">
 <script type="text/javascript" src="{% static 'js/summernote-lite.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/lang/summernote-ko-KR.js' %}"></script>
 {% endblock %}
 
-{% block contents2 %}
+{% block contents %}
 <form method="POST" action="" enctype="multipart/form-data" >
     {% csrf_token %}
-    <p><strong>이름: </strong>{{ form.name }}</p>
-    <p><strong>사진: </strong>{{ form.image }}</p>
-    <input type="checkbox" id="imageChangeCheck" name="imageChange" style="display: none;">
-    <p><strong>분야: </strong>{{ form.genretext }}</p>
-    <p><strong>지역: </strong>{{ form.address }}</p>
-    <p><strong>장소: </strong>{{ form.place }}</p>
-    <p><strong>Hashtag: </strong>{{ form.tagtext }}</p>
-<!--    <p><strong>사진: </strong>{{ form.upload_files }}</p>-->
-<!--    <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">-->
-    <p><strong>summary:</strong></p>
-    <textarea id="summernote" name="summary">{% if update %}{{ form.summary.value | safe }}{% endif %}</textarea>
+    <div class="tab-content" id="nav-tabContent" style="background-color: white; border-right: 1px solid #E6E6E6; border-left: 1px solid #E6E6E6; border-bottom: 1px solid #E6E6E6; border-radius: 0px 0px 20px 20px">
+        <div class="target" id="1" role="tabpanel" aria-labelledby="tab1">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9">
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 100; padding-right: 15" align="right">
+                                <strong>이름: </strong>
+                            </td>
+                            <td>
+                                {{ form.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-right: 15" align="right">
+                                <strong>프로필 사진: </strong>
+                            </td>
+                            <td>
+                                {{ form.image }}
+                                <input type="checkbox" id="imageChangeCheck" name="imageChange" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-right: 15" align="right">
+                                <strong>전문분야: </strong>
+                            </td>
+                            <td>
+                                {{ form.genretext }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-right: 15" align="right">
+                                <strong>Hashtag: </strong>
+                            </td>
+                            <td>
+                                {{ form.tagtext }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="target" id="2" role="tabpanel" aria-labelledby="tab2">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9">
+                    <h4>트레이너 리뷰</h4>
+                </div>
+            </div>
+        </div>
+        <div class="target" id="3" role="tabpanel" aria-labelledby="tab3">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9" style="padding-bottom: 20px">
+                    <h4>트레이너 소개</h4>
+                </div>
+                <div class="col-12 col-md-9">
+                    <textarea id="summernote" name="summary">{% if update %}{{ form.summary.value | safe }}{% endif %}</textarea>
+                </div>
+            </div>
+        </div>
+        <div class="target" id="4" role="tabpanel" aria-labelledby="tab4">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9">
+                    <div style="padding-bottom: 20px">
+                        <h4>자격/증명</h4>
+                    </div>
+                    <table style="width: 100%">
+                        <tr style="">
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert1 }}
+                                {{ form.certimg1 }}
+                                <input type="checkbox" id="certimg1ChangeCheck" name="certimg1Change" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert2 }}
+                                {{ form.certimg2 }}
+                                <input type="checkbox" id="certimg2ChangeCheck" name="certimg2Change" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert3 }}
+                                {{ form.certimg3 }}
+                                <input type="checkbox" id="certimg3ChangeCheck" name="certimg3Change" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert4 }}
+                                {{ form.certimg4 }}
+                                <input type="checkbox" id="certimg4ChangeCheck" name="certimg4Change" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert5 }}
+                                {{ form.certimg5 }}
+                                <input type="checkbox" id="certimg5ChangeCheck" name="certimg5Change" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert6 }}
+                                {{ form.certimg6 }}
+                                <input type="checkbox" id="certimg6ChangeCheck" name="certimg6Change" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert7 }}
+                                {{ form.certimg7 }}
+                                <input type="checkbox" id="certimg7ChangeCheck" name="certimg7Change" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert8 }}
+                                {{ form.certimg8 }}
+                                <input type="checkbox" id="certimg8ChangeCheck" name="certimg8Change" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert9 }}
+                                {{ form.certimg9 }}
+                                <input type="checkbox" id="certimg9ChangeCheck" name="certimg9Change" style="display: none;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20px"><i class="fas fa-stamp" style="vertical-align: middle"></i></td>
+                            <td style="padding-top: 20px">
+                                {{ form.cert10 }}
+                                {{ form.certimg10 }}
+                                <input type="checkbox" id="certimg10ChangeCheck" name="certimg10Change" style="display: none;">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="target" id="5" role="tabpanel" aria-labelledby="tab5">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9">
+                    <div style="padding-bottom: 20px">
+                        <h4>이용가격</h4>
+                    </div>
+                    <div>
+                        뭐는 얼마
+                        뭐는 얼마
+                        뭐는 얼마
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="target" id="6" role="tabpanel" aria-labelledby="tab6">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9">
+                    <div style="padding-bottom: 20px">
+                        <h4>바로가기</h4>
+                    </div>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 20px">
+                                <i class="fab fa-instagram" style="vertical-align: middle"></i>
+                            </td>
+                            <td>
+                                {{ form.sns1 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="fab fa-facebook-f" style="vertical-align: middle"></i>
+                            </td>
+                            <td>
+                                {{ form.sns2 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="far fa-window-maximize" style="vertical-align: middle"></i>
+                            </td>
+                            <td>
+                                {{ form.sns3 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="far fa-window-maximize" style="vertical-align: middle"></i>
+                            </td>
+                            <td>
+                                {{ form.sns4 }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <i class="far fa-window-maximize" style="vertical-align: middle"></i>
+                            </td>
+                            <td>
+                                {{ form.sns5 }}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="target" id="7" role="tabpanel" aria-labelledby="tab7">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9">
+                    <div style="padding-bottom: 20px">
+                        <h4>위치</h4>
+                    </div>
+                    <table style="width: 100%">
+                        <tr>
+                            <td style="width: 50px; padding-right:15px" align="right">
+                                <strong>지역: </strong>
+                            </td>
+                            <td>
+                                {{ form.address }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px; padding-right:15px" align="right">
+                                <strong>장소: </strong>
+                            </td>
+                            <td>
+                                {{ form.place }}
+                            </td>
+                        </tr>
+                    </table>
+                    <p>&nbsp;</p>
+                </div>
+            </div>
+        </div>
+        <div align="center">
+            {% if update %}
+            <button id="write" type="submit" class="btn btn-outline-secondary">수정하기</button>
+            {% else %}
+            <button id="write" class="btn btn-outline-secondary" type="submit">등록하기</button>
+            {% endif %}
+        </div>
+        <p>&nbsp;</p>
+    </div>
 
-    <p>{{ form.cert1 }}</p>
-    <p>{{ form.certimg1 }}</p>
-    <input type="checkbox" id="certimg1ChangeCheck" name="certimg1Change" style="display: none;">
-    <p>{{ form.cert2 }}</p>
-    <p>{{ form.certimg2 }}</p>
-    <input type="checkbox" id="certimg2ChangeCheck" name="certimg2Change" style="display: none;">
-    <p>{{ form.cert3 }}</p>
-    <p>{{ form.certimg3 }}</p>
-    <input type="checkbox" id="certimg3ChangeCheck" name="certimg3Change" style="display: none;">
-    <p>{{ form.cert4 }}</p>
-    <p>{{ form.certimg4 }}</p>
-    <input type="checkbox" id="certimg4ChangeCheck" name="certimg4Change" style="display: none;">
-    <p>{{ form.cert5 }}</p>
-    <p>{{ form.certimg5 }}</p>
-    <input type="checkbox" id="certimg5ChangeCheck" name="certimg5Change" style="display: none;">
-    <p>{{ form.cert6 }}</p>
-    <p>{{ form.certimg6 }}</p>
-    <input type="checkbox" id="certimg6ChangeCheck" name="certimg6Change" style="display: none;">
-    <p>{{ form.cert7 }}</p>
-    <p>{{ form.certimg7 }}</p>
-    <input type="checkbox" id="certimg7ChangeCheck" name="certimg7Change" style="display: none;">
-    <p>{{ form.cert8 }}</p>
-    <p>{{ form.certimg8 }}</p>
-    <input type="checkbox" id="certimg8ChangeCheck" name="certimg8Change" style="display: none;">
-    <p>{{ form.cert9 }}</p>
-    <p>{{ form.certimg9 }}</p>
-    <input type="checkbox" id="certimg9ChangeCheck" name="certimg9Change" style="display: none;">
-    <p>{{ form.cert10 }}</p>
-    <p>{{ form.certimg10 }}</p>
-    <input type="checkbox" id="certimg10ChangeCheck" name="certimg10Change" style="display: none;">
 
-    <p>{{ form.sns1 }}</p>
-    <p>{{ form.sns2 }}</p>
-    <p>{{ form.sns3 }}</p>
-    <p>{{ form.sns4 }}</p>
-    <p>{{ form.sns5 }}</p>
-
-
-
-    {% if update %}
-    <button id="write" type="submit" class="btn btn-primary">수정</button>
-    {% else %}
-    <button id="write" class="btn btn-primary" type="submit">등록</button>
-    {% endif %}
 </form>
 
 <script>

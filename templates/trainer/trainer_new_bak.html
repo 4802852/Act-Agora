@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% load static %}
+<link href="{% static 'css/summernote-lite.css' %}" rel="stylesheet">
+<script type="text/javascript" src="{% static 'js/summernote-lite.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/lang/summernote-ko-KR.js' %}"></script>
+{% endblock %}
+
+{% block contents %}
+<form method="POST" action="" enctype="multipart/form-data" >
+    {% csrf_token %}
+    <p><strong>이름: </strong>{{ form.name }}</p>
+    <p><strong>사진: </strong>{{ form.image }}</p>
+    <input type="checkbox" id="imageChangeCheck" name="imageChange" style="display: none;">
+    <p><strong>분야: </strong>{{ form.genretext }}</p>
+    <p><strong>지역: </strong>{{ form.address }}</p>
+    <p><strong>장소: </strong>{{ form.place }}</p>
+    <p><strong>Hashtag: </strong>{{ form.tagtext }}</p>
+<!--    <p><strong>사진: </strong>{{ form.upload_files }}</p>-->
+<!--    <input type="checkbox" id="fileChangeCheck" name="fileChange" style="display: none;">-->
+    <p><strong>summary:</strong></p>
+    <textarea id="summernote" name="summary">{% if update %}{{ form.summary.value | safe }}{% endif %}</textarea>
+
+    <p>{{ form.cert1 }}</p>
+    <p>{{ form.certimg1 }}</p>
+    <input type="checkbox" id="certimg1ChangeCheck" name="certimg1Change" style="display: none;">
+    <p>{{ form.cert2 }}</p>
+    <p>{{ form.certimg2 }}</p>
+    <input type="checkbox" id="certimg2ChangeCheck" name="certimg2Change" style="display: none;">
+    <p>{{ form.cert3 }}</p>
+    <p>{{ form.certimg3 }}</p>
+    <input type="checkbox" id="certimg3ChangeCheck" name="certimg3Change" style="display: none;">
+    <p>{{ form.cert4 }}</p>
+    <p>{{ form.certimg4 }}</p>
+    <input type="checkbox" id="certimg4ChangeCheck" name="certimg4Change" style="display: none;">
+    <p>{{ form.cert5 }}</p>
+    <p>{{ form.certimg5 }}</p>
+    <input type="checkbox" id="certimg5ChangeCheck" name="certimg5Change" style="display: none;">
+    <p>{{ form.cert6 }}</p>
+    <p>{{ form.certimg6 }}</p>
+    <input type="checkbox" id="certimg6ChangeCheck" name="certimg6Change" style="display: none;">
+    <p>{{ form.cert7 }}</p>
+    <p>{{ form.certimg7 }}</p>
+    <input type="checkbox" id="certimg7ChangeCheck" name="certimg7Change" style="display: none;">
+    <p>{{ form.cert8 }}</p>
+    <p>{{ form.certimg8 }}</p>
+    <input type="checkbox" id="certimg8ChangeCheck" name="certimg8Change" style="display: none;">
+    <p>{{ form.cert9 }}</p>
+    <p>{{ form.certimg9 }}</p>
+    <input type="checkbox" id="certimg9ChangeCheck" name="certimg9Change" style="display: none;">
+    <p>{{ form.cert10 }}</p>
+    <p>{{ form.certimg10 }}</p>
+    <input type="checkbox" id="certimg10ChangeCheck" name="certimg10Change" style="display: none;">
+
+    <p>{{ form.sns1 }}</p>
+    <p>{{ form.sns2 }}</p>
+    <p>{{ form.sns3 }}</p>
+    <p>{{ form.sns4 }}</p>
+    <p>{{ form.sns5 }}</p>
+
+
+
+    {% if update %}
+    <button id="write" type="submit" class="btn btn-primary">수정</button>
+    {% else %}
+    <button id="write" class="btn btn-primary" type="submit">등록</button>
+    {% endif %}
+</form>
+
+<script>
+$(document).ready(function() {
+    $('#summernote').summernote({
+        height: 500,
+        minHeight: 500,
+        maxHeight: 500,
+        lang: 'ko-KR',
+
+        toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear', 'fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']]
+        ]
+    });
+    $('.note-resizebar').css('display','none');
+});
+</script>
+<script type="text/javascript">
+    var checkUnload = true;
+    $(window).on('beforeunload', function () {
+        if (checkUnload) return "이 페이지를 벗어나면 작성된 내용은 저장되지 않습니다.";
+    });
+    $("#write").on("click", function () {
+        checkUnload = false;
+        $("submit").submit();
+    });
+</script>
+{% if imagename %}
+<script type = "text/javascript">
+    $("#id_image").change(function() {
+        if ($('#id_image').get(0).files.length == 1) {
+            $('#image-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg1").change(function() {
+        if ($('#id_certimg1').get(0).files.length == 1) {
+            $('#certimg1-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg2").change(function() {
+        if ($('#id_certimg2').get(0).files.length == 1) {
+            $('#certimg2-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg3").change(function() {
+        if ($('#id_certimg3').get(0).files.length == 1) {
+            $('#certimg3-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg4").change(function() {
+        if ($('#id_certimg4').get(0).files.length == 1) {
+            $('#certimg4-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg5").change(function() {
+        if ($('#id_certimg5').get(0).files.length == 1) {
+            $('#certimg5-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg6").change(function() {
+        if ($('#id_certimg6').get(0).files.length == 1) {
+            $('#certimg6-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg7").change(function() {
+        if ($('#id_certimg7').get(0).files.length == 1) {
+            $('#certimg7-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg8").change(function() {
+        if ($('#id_certimg8').get(0).files.length == 1) {
+            $('#certimg8-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg9").change(function() {
+        if ($('#id_certimg9').get(0).files.length == 1) {
+            $('#certimg9-clear_id').attr("checked", false)
+        }
+    });
+    $("#id_certimg10").change(function() {
+        if ($('#id_certimg10').get(0).files.length == 1) {
+            $('#certimg10-clear_id').attr("checked", false)
+        }
+    });
+
+
+    $('#write').click( function() {
+        if($('#id_image').get(0).files.length == 1){
+            $('#imageChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg1').get(0).files.length == 1){
+            $('#certimg1ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg2').get(0).files.length == 1){
+            $('#certimg2ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg3').get(0).files.length == 1){
+            $('#certimg3ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg4').get(0).files.length == 1){
+            $('#certimg4ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg5').get(0).files.length == 1){
+            $('#certimg5ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg6').get(0).files.length == 1){
+            $('#certimg6ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg7').get(0).files.length == 1){
+            $('#certimg7ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg8').get(0).files.length == 1){
+            $('#certimg8ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg9').get(0).files.length == 1){
+            $('#certimg9ChangeCheck').attr("checked",true)
+        }
+        if($('#id_certimg10').get(0).files.length == 1){
+            $('#certimg10ChangeCheck').attr("checked",true)
+        }
+    });
+
+</script>
+{% endif %}
+{% endblock %}

@@ -31,6 +31,11 @@ class TrainerNewForm(forms.ModelForm):
             'placeholder': '특징을 입력해주세요. (예 - #차분한 #열정적인, 띄어쓰기로 구분)',
             'class': 'form-control',
         })
+        formcontrol = ['cert1', 'cert2', 'cert3', 'cert4', 'cert5', 'cert6', 'cert7', 'cert8', 'cert9', 'cert10']
+        formcontrol += ['sns1', 'sns2', 'sns3', 'sns4', 'sns5']
+        for field_name, field in self.fields.items():
+            if field_name in formcontrol:
+                field.widget.attrs['class'] = 'form-control'
 
     class Meta:
         model = Trainer
